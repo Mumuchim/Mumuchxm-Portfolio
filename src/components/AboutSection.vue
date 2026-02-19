@@ -36,6 +36,13 @@
             {{ tag }}
           </span>
         </div>
+
+        <!-- ✅ NEW: NEXT BUTTON (shows after typing ends) -->
+        <div class="nextRow" v-if="!isTyping">
+          <button class="nextBtn" type="button" @click="goNextTab">
+            Next <span class="arrow">→</span>
+          </button>
+        </div>
       </template>
 
       <!-- ===== CERTIFICATIONS ===== -->
@@ -279,6 +286,11 @@ const tabs = [
   { key: "stack", label: "TECH STACK" },
   { key: "certs", label: "CERTIFICATIONS" },
 ];
+
+/* ✅ NEW: next button action */
+function goNextTab() {
+  active.value = "stack";
+}
 
 /* ✅ Overview content (shorter) */
 const content = {
@@ -578,34 +590,86 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
 
 .aboutTabs{
   display:flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
+/* match HeaderNav .navlinks a */
 .aboutTab{
   font-family: var(--font-tech);
-  font-size: 11px;
-  letter-spacing: 1px;
-  padding: 9px 12px;
+  text-decoration: none; /* harmless for button */
+  font-size: 12px;
+  letter-spacing: 1.1px;
+  font-weight: 700;
+
+  color: rgba(255,255,255,.85);
+  padding: 10px 14px;
   border-radius: 999px;
+
   background: rgba(0,0,0,.18);
-  border: 1px solid rgba(255,255,255,.10);
-  color: rgba(255,255,255,.70);
+  border: 1px solid transparent;
+
   cursor: pointer;
-  transition: all .18s ease;
+  position: relative;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    filter .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    color .25s ease;
 }
 
 .aboutTab:hover{
-  transform: translateY(-1px);
-  border-color: rgba(255,255,255,.14);
-  background: rgba(0,0,0,.24);
+  transform: translateY(-2px);
+  background: rgba(183,140,255,.10);
+  border-color: rgba(255,255,255,.10);
+  color: rgba(255,255,255,.96);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.35),
+    0 0 20px rgba(168,140,255,.25);
+  filter: brightness(1.03);
 }
 
+.aboutTab:active{
+  transform: translateY(0);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.30),
+    0 0 12px rgba(168,140,255,.18);
+}
+
+/* active = same glow behavior as nav header */
 .aboutTab.active{
-  color: rgba(255,255,255,.92);
-  border-color: rgba(183,140,255,.38);
-  background: rgba(183,140,255,.10);
-  box-shadow: 0 0 0 3px rgba(183,140,255,.08) inset;
+  color: var(--accent);
+  background: rgba(183,140,255,.12);
+  border-color: rgba(183,140,255,.32);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.35),
+    0 0 20px rgba(168,140,255,.22);
+}
+
+/* optional: same underline glow as nav */
+.aboutTab.active::after{
+  content:"";
+  position:absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -8px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(183,140,255,.85);
+  box-shadow: 0 0 12px rgba(183,140,255,.25);
+}
+
+/* keyboard focus (nice UX like cert cards) */
+.aboutTab:focus-visible{
+  outline: none;
+  border-color: rgba(183,140,255,.35);
+  box-shadow:
+    0 0 0 3px rgba(183,140,255,.10),
+    0 10px 24px rgba(0,0,0,.35);
 }
 
 .aboutCard{
@@ -689,6 +753,67 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   color: rgba(255,255,255,.82);
   background: rgba(0,0,0,.18);
   border: 1px solid rgba(255,255,255,.10);
+}
+
+/* ✅ NEW: Next button styles (match nav hover glow) */
+.nextRow{
+  margin-top: -30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nextBtn{
+  font-family: var(--font-tech);
+  font-size: 12px;
+  letter-spacing: 1.1px;
+  font-weight: 800;
+
+  color: rgba(255,255,255,.90);
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  background: rgba(0,0,0,.18);
+  border: 1px solid transparent;
+
+  cursor: pointer;
+  position: relative;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    filter .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    color .25s ease;
+}
+
+.nextBtn:hover{
+  transform: translateY(-2px);
+  background: rgba(183,140,255,.10);
+  border-color: rgba(255,255,255,.10);
+  color: rgba(255,255,255,.96);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.35),
+    0 0 20px rgba(168,140,255,.25);
+  filter: brightness(1.03);
+}
+
+.nextBtn:active{
+  transform: translateY(0);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.30),
+    0 0 12px rgba(168,140,255,.18);
+}
+
+.nextBtn .arrow{
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform .25s ease;
+}
+
+.nextBtn:hover .arrow{
+  transform: translateX(3px);
 }
 
 /* ===== Shared section head ===== */

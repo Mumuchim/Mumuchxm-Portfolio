@@ -22,6 +22,7 @@
       :pento-img="pentoImg"
       :janken-img="jankenImg"
       :quizlentine-img="quizlentineImg"
+      :fixfinder-img="fixfinderImg"
     />
   </section>
 
@@ -45,6 +46,7 @@ import SkillsSection from "./components/SkillsSection.vue";
 import pentoImg from "./assets/pento.png";
 import jankenImg from "./assets/janken.png";
 import quizlentineImg from "./assets/quizlentine.png";
+import fixfinderImg from "./assets/fixfinder.png";
 import avatarImg from "./assets/avatar.png";
 
 /* Typing Logic */

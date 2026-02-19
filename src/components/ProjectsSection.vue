@@ -26,6 +26,8 @@
       <ProjectCard
         title="FixFinder"
         desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
+        :img="fixfinderImg"
+        link="https://fixfinder-deploy.vercel.app/"
       />
 
       <ProjectCard
@@ -45,6 +47,7 @@ defineProps({
   id: { type: String, default: "projects" },
   pentoImg: { type: String, default: null },
   jankenImg: { type: String, default: null },
-  quizlentineImg: { type: String, default: null }, // ✅ NEW
+  quizlentineImg: { type: String, default: null },
+  fixfinderImg: { type: String, default: null },
 });
 </script>
