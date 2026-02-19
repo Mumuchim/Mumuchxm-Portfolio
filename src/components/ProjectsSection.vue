@@ -1,3 +1,4 @@
+<!-- src/components/ProjectsSection.vue -->
 <template>
   <section :id="id" class="tabSection">
     <div class="tabPlaceholder">
@@ -11,15 +12,22 @@
       <ProjectCard
         title="project: QUIZLENTINE"
         desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter."
+        :img="quizlentineImg"
+        video="https://youtu.be/etR4FhT6meM"
       />
+
       <ProjectCard
         title="Janken Pom"
         desc="Discord bot that can make rock, paper, scissors with anyone that joined your match."
+        :img="jankenImg"
+        link="https://discord.com/oauth2/authorize?client_id=1439905828189503549"
       />
+
       <ProjectCard
         title="FixFinder"
         desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
       />
+
       <ProjectCard
         title="PentoBattle"
         desc="Coming Soon..."
@@ -36,5 +44,7 @@ import ProjectCard from "./ProjectCard.vue";
 defineProps({
   id: { type: String, default: "projects" },
   pentoImg: { type: String, default: null },
+  jankenImg: { type: String, default: null },
+  quizlentineImg: { type: String, default: null }, // ✅ NEW
 });
 </script>

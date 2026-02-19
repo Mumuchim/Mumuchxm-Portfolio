@@ -18,8 +18,12 @@
       </section>
 
       <section id="projects">
-        <ProjectsSection :pento-img="pentoImg" />
-      </section>
+    <ProjectsSection
+      :pento-img="pentoImg"
+      :janken-img="jankenImg"
+      :quizlentine-img="quizlentineImg"
+    />
+  </section>
 
       <section id="skills">
         <SkillsSection />
@@ -39,6 +43,8 @@ import ProjectsSection from "./components/ProjectsSection.vue";
 import SkillsSection from "./components/SkillsSection.vue";
 
 import pentoImg from "./assets/pento.png";
+import jankenImg from "./assets/janken.png";
+import quizlentineImg from "./assets/quizlentine.png";
 import avatarImg from "./assets/avatar.png";
 
 /* Typing Logic */

@@ -240,7 +240,7 @@ import viteIcon from "../assets/stack/vite.png";
 import bootstrapIcon from "../assets/stack/bootstrap.png";
 import supabaseIcon from "../assets/stack/supabase.png";
 import vercelIcon from "../assets/stack/vercel.png";
-
+import railwayIcon from "../assets/stack/railway.png";
 import asepriteIcon from "../assets/stack/aseprite.png";
 import unityIcon from "../assets/stack/unity.png";
 import webglIcon from "../assets/stack/webgl.png";
@@ -532,6 +532,7 @@ const additionalTools = [
   { name: "Canva", icon: canvaIcon },
   { name: "VS Code", icon: vscodeIcon },
   { name: "ChatGPT", icon: chatgptIcon },
+  { name: "Railway", icon: railwayIcon },
 ];
 
 /* ===== preview modal state ===== */
