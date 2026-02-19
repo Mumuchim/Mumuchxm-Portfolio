@@ -50,16 +50,20 @@ defineProps({
     inset 0 1px 0 rgba(255,255,255,.06);
 
   position: relative;
-  transform: translateY(0) scale(1);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  transform: translateY(0);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, filter .25s ease;
   will-change: transform;
 }
 
+/* ✅ Unified hover: same “lift + glow” vibe as hireBtn (but less extreme) */
 .card:hover{
   z-index: 50;
-  transform: translateY(-18px) scale(1.04);
-  box-shadow: 0 26px 80px rgba(0,0,0,.65);
-  border-color: rgba(183,140,255,.35);
+  transform: translateY(-2px);
+  border-color: rgba(183,140,255,.30);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.35),
+    0 0 20px rgba(168,140,255,.25);
+  filter: brightness(1.03);
 }
 
 /* Thumbnail */
@@ -75,11 +79,11 @@ defineProps({
   height:100%;
   object-fit:cover;
   display:block;
-  transition: transform .35s ease;
+  transition: transform .25s ease; /* ✅ match button timing */
 }
 
 .card:hover .thumbImg{
-  transform: scale(1.06);
+  transform: scale(1.03); /* ✅ subtle */
 }
 
 .thumbFake{
@@ -94,12 +98,11 @@ defineProps({
 }
 
 /* Body */
-/* Instead of calc(290px - 132px), we make a stable min-height */
 .cardBody{
   padding: 14px 14px 16px;
   display:flex;
   flex-direction:column;
-  min-height: 158px; /* roughly what your old calc produced */
+  min-height: 158px;
 }
 
 .cardTitle{
@@ -147,17 +150,26 @@ defineProps({
   gap: 8px;
 
   cursor: pointer;
-  transition: transform .25s cubic-bezier(.4,.0,.2,1), box-shadow .25s ease, opacity .25s ease;
+
+  /* ✅ Unified hover timing */
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease, opacity .25s ease;
   box-shadow: 0 6px 20px rgba(108,74,168,.35);
 }
 
+/* ✅ hover now matches hireBtn vibe */
 .viewBtn:hover{
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(108,74,168,.55);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.35),
+    0 0 20px rgba(168,140,255,.35);
+  filter: brightness(1.05);
 }
 
 .viewBtn:active{
   transform: translateY(0);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.30),
+    0 0 12px rgba(168,140,255,.22);
 }
 
 .arrow{
@@ -168,7 +180,7 @@ defineProps({
   transform: translateX(4px);
 }
 
-/* Optional: Coming soon state (you already have prop, now it does something) */
+/* Coming soon state */
 .viewBtn.coming{
   opacity: .65;
   cursor: not-allowed;
@@ -178,5 +190,6 @@ defineProps({
 .viewBtn.coming:hover{
   transform: none;
   box-shadow: 0 6px 20px rgba(108,74,168,.35);
+  filter: saturate(.8);
 }
 </style>

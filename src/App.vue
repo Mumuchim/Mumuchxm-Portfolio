@@ -1,26 +1,29 @@
 <template>
   <div class="page">
     <div class="frame">
-      <HeaderNav :active="activeSection" />
+      <!-- ✅ Use HeaderNav as the single source of truth -->
+      <HeaderNav v-model:active="activeSection" />
 
-      <!-- HOME -->
-      <HeroSection
-        id="home"
-        :avatar-img="avatarImg"
-        :typed-text="typedText"
-      />
+      <!-- HOME (not in nav) -->
+      <section id="home">
+        <HeroSection
+          :avatar-img="avatarImg"
+          :typed-text="typedText"
+        />
+      </section>
 
-      <!-- ABOUT -->
-      <AboutSection id="about" />
+      <!-- ✅ Wrap sections so the ID is guaranteed on a real DOM section -->
+      <section id="about">
+        <AboutSection />
+      </section>
 
-      <!-- PROJECTS -->
-      <ProjectsSection id="projects" :pento-img="pentoImg" />
+      <section id="projects">
+        <ProjectsSection :pento-img="pentoImg" />
+      </section>
 
-      <!-- SKILLS -->
-      <SkillsSection id="skills" />
-
-      <!-- CONTACT -->
-      <ContactSection id="contact" />
+      <section id="skills">
+        <SkillsSection />
+      </section>
     </div>
   </div>
 </template>
@@ -34,13 +37,12 @@ import HeroSection from "./components/HeroSection.vue";
 import AboutSection from "./components/AboutSection.vue";
 import ProjectsSection from "./components/ProjectsSection.vue";
 import SkillsSection from "./components/SkillsSection.vue";
-import ContactSection from "./components/ContactSection.vue";
 
 import pentoImg from "./assets/pento.png";
 import avatarImg from "./assets/avatar.png";
 
 /* Typing Logic */
-const words = ["Web Development", "Video/Photo Editing", "Game Development", "Automation"];
+const words = ["Web Development", "Photo/Video Editing", "Game Development", "Automation"];
 
 const typedText = ref("");
 let wordIndex = 0;
@@ -81,44 +83,21 @@ function typeEffect() {
   typeTimerId = setTimeout(typeEffect, delay);
 }
 
-/* Active section tracking */
-const activeSection = ref("home");
-let observer = null;
+/* ✅ Active section controlled by HeaderNav only */
+const activeSection = ref("about");
 
 onMounted(() => {
   typeEffect();
 
-  const sections = Array.from(document.querySelectorAll("section[id]"));
-  const ratios = new Map();
-
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => ratios.set(e.target.id, e.intersectionRatio));
-
-      let bestId = null;
-      let bestRatio = 0;
-
-      for (const [id, r] of ratios.entries()) {
-        if (r > bestRatio) {
-          bestRatio = r;
-          bestId = id;
-        }
-      }
-
-      if (bestId) activeSection.value = bestId;
-    },
-    {
-      root: null,
-      threshold: [0, 0.25, 0.5, 0.75, 1],
-    }
-  );
-
-  sections.forEach((s) => observer.observe(s));
+  // Optional: if user lands with hash, reflect it immediately
+  const hash = location.hash?.slice(1);
+  if (hash === "about" || hash === "projects" || hash === "skills") {
+    activeSection.value = hash;
+  }
 });
 
 onBeforeUnmount(() => {
   clearTimeout(typeTimerId);
   clearTimeout(pauseTimerId);
-  if (observer) observer.disconnect();
 });
 </script>

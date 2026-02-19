@@ -26,12 +26,6 @@
 <script setup>
 import { onBeforeUnmount, onMounted } from "vue";
 
-/**
- * Parent usage:
- * const activeSection = ref("about")
- * <HeaderNav v-model:active="activeSection" />
- */
-
 const props = defineProps({
   active: { type: String, default: "about" },
 });
@@ -42,7 +36,6 @@ const links = [
   { id: "about", label: "ABOUT ME" },
   { id: "projects", label: "PROJECTS" },
   { id: "skills", label: "SKILLS" },
-  { id: "contact", label: "CONTACT" },
 ];
 
 function headerOffsetPx() {
@@ -50,7 +43,7 @@ function headerOffsetPx() {
     .getPropertyValue("--header-h")
     .trim();
   const header = Number.parseInt(raw || "0", 10) || 0;
-  return header + 18; // matches your scroll-padding-top spacing
+  return header + 18;
 }
 
 function setActiveByScroll() {
@@ -76,7 +69,6 @@ function go(id) {
 
   emit("update:active", id);
 
-  // smooth scroll with sticky header compensation
   const y = window.scrollY + el.getBoundingClientRect().top - headerOffsetPx();
   window.scrollTo({ top: y, behavior: "smooth" });
 
@@ -90,15 +82,13 @@ function onScroll() {
 }
 
 onMounted(() => {
-  // If user loads with #hash, set active immediately
   if (location.hash) {
     const id = location.hash.slice(1);
-    if (links.some(l => l.id === id)) emit("update:active", id);
+    if (links.some((l) => l.id === id)) emit("update:active", id);
   }
 
   setActiveByScroll();
 
-  // NOTE: some browsers fire scroll on document, some on window; we listen to both safely
   window.addEventListener("scroll", onScroll, { passive: true });
   document.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
@@ -190,23 +180,38 @@ onBeforeUnmount(() => {
   border-radius: 999px;
   border: 1px solid transparent;
 
-  transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+  /* ✅ unify hover timing + glow feel */
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease, background .25s ease, border-color .25s ease, color .25s ease;
   position: relative;
 }
 
-/* Hover */
+/* ✅ Unified hover: same vibe as hireBtn */
 .navlinks a:hover{
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   background: rgba(183,140,255,.10);
   border-color: rgba(255,255,255,.10);
   color: rgba(255,255,255,.96);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.35),
+    0 0 20px rgba(168,140,255,.25);
+  filter: brightness(1.03);
 }
 
-/* Active */
+.navlinks a:active{
+  transform: translateY(0);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.30),
+    0 0 12px rgba(168,140,255,.18);
+}
+
+/* ✅ Active (now also glows like hover) */
 .navlinks a.active{
   color: var(--accent);
-  background: rgba(183,140,255,.10);
-  border-color: rgba(183,140,255,.28);
+  background: rgba(183,140,255,.12);
+  border-color: rgba(183,140,255,.32);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.35),
+    0 0 20px rgba(168,140,255,.22);
 }
 
 /* Purple underline glow */

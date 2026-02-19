@@ -183,7 +183,9 @@ section[id]{
   font-size: 14px;
   letter-spacing: .5px;
   cursor: pointer;
-  transition: all .25s ease;
+
+  /* keep as your "gold standard" */
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
 }
 
 .hireBtn:hover{
@@ -191,6 +193,14 @@ section[id]{
   box-shadow:
     0 10px 24px rgba(0,0,0,.35),
     0 0 20px rgba(168,140,255,.5);
+}
+
+/* small active feedback */
+.hireBtn:active{
+  transform: translateY(0);
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.30),
+    0 0 12px rgba(168,140,255,.30);
 }
 
 .hireSub{
@@ -265,7 +275,6 @@ section[id]{
   font-size: clamp(26px, 3vw, 38px);
   letter-spacing: 1px;
 }
-
 
 .tabDesc{
   margin: 0;
@@ -342,13 +351,10 @@ section[id]{
     max-width: 360px;
   }
 
-.tabTitle{
-  font-family: var(--font-tech);   /* ✅ Orbitron */
-  font-size: clamp(26px, 3vw, 32px);
-  font-weight: 800;
-  letter-spacing: 1px;
-}
-
-
-
+  .tabTitle{
+    font-family: var(--font-tech);   /* ✅ Orbitron */
+    font-size: clamp(26px, 3vw, 32px);
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
 }
