@@ -320,7 +320,7 @@ const overviewModel = [
     value:
       "— I'm not yet confident with my skills in programming but I'm always ready to learn any language and contribute to real projects",
   },
-  { type: "bold", value: " if given a chance. 😗" },
+  { type: "bold", value: " if given a chance." },
 ];
 
 const overviewHtml = ref("");

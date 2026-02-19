@@ -11,7 +11,7 @@
     <section class="cardsRow">
       <ProjectCard
         title="project: QUIZLENTINE"
-        desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter."
+        desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter that's why it's old looking and buggy :<"
         :img="quizlentineImg"
         video="https://youtu.be/etR4FhT6meM"
       />
