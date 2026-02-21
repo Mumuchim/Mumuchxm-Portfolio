@@ -9,13 +9,14 @@
     </div>
 
     <section class="cardsRow">
-      <ProjectCard
-        title="project: QUIZLENTINE"
-        desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter that's why it's old looking and buggy :<"
-        :img="quizlentineImg"
-        video="https://youtu.be/etR4FhT6meM"
-      />
 
+      <ProjectCard
+        title="PentoBattle"
+        desc="Play 1v1 Pentomino with your friends. Inspired by my math highschool teacher idea."
+        :img="pentoImg"
+        link="https://pentomino-battle.vercel.app/"
+      />
+      
       <ProjectCard
         title="Janken Pom"
         desc="Discord bot that can make rock, paper, scissors with anyone that joined your match."
@@ -24,18 +25,19 @@
       />
 
       <ProjectCard
+        title="project: QUIZLENTINE"
+        desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter that's why it's old looking and buggy :<"
+        :img="quizlentineImg"
+        video="https://youtu.be/etR4FhT6meM"
+      />
+
+      <ProjectCard
         title="FixFinder"
         desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
         :img="fixfinderImg"
         link="https://fixfinder-deploy.vercel.app/"
       />
-
-      <ProjectCard
-        title="PentoBattle"
-        desc="Coming Soon..."
-        :img="pentoImg"
-        :coming="true"
-      />
+      
     </section>
   </section>
 </template>
