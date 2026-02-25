@@ -14,7 +14,7 @@
         title="PentoBattle"
         desc="Play 1v1 Pentomino with your friends. Inspired by my math highschool teacher idea."
         :img="pentoImg"
-        link="https://pentomino-battle.vercel.app/"
+        link="https://pento-battle.vercel.app/"
       />
       
       <ProjectCard
