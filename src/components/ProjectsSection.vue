@@ -35,7 +35,7 @@
         title="FixFinder"
         desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
         :img="fixfinderImg"
-        link="https://fixfinder-deploy.vercel.app/"
+        link="https://fix-finder-beta.vercel.app/"
       />
       
     </section>
