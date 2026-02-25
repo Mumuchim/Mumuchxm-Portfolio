@@ -25,17 +25,17 @@
       />
 
       <ProjectCard
-        title="project: QUIZLENTINE"
-        desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter that's why it's old looking and buggy :<"
-        :img="quizlentineImg"
-        video="https://youtu.be/etR4FhT6meM"
-      />
-
-      <ProjectCard
         title="FixFinder"
         desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
         :img="fixfinderImg"
         link="https://fix-finder-beta.vercel.app/"
+      />
+
+      <ProjectCard
+        title="project: QUIZLENTINE"
+        desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter that's why it's old looking and buggy :<"
+        :img="quizlentineImg"
+        video="https://youtu.be/etR4FhT6meM"
       />
       
     </section>
