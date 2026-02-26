@@ -11,13 +11,21 @@
     <section class="cardsRow">
 
       <ProjectCard
+        title="FixFinder"
+        desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
+        :img="fixfinderImg"
+        link="https://fix-finder-beta.vercel.app/"
+        :stack="fixFinderStack"
+      />
+
+      <ProjectCard
         title="PENTObattle"
         desc="Play 1v1 Pentomino with your friends. Inspired by my math highschool teacher idea."
         :img="pentoImg"
         link="https://pento-battle.vercel.app/"
         :stack="pentoStack"
       />
-      
+
       <ProjectCard
         title="Janken Pom"
         desc="Discord bot that can make rock, paper, scissors with anyone that joined your match."
@@ -27,18 +35,10 @@
       />
 
       <ProjectCard
-        title="FixFinder"
-        desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
-        :img="fixfinderImg"
-        link="https://fix-finder-beta.vercel.app/"
-        :stack="fixFinderStack"
-      />
-
-      <ProjectCard
         title="project: QUIZLENTINE"
         desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter that's why it's old looking and buggy :<"
         :img="quizlentineImg"
-        video="https://youtu.be/etR4FhT6meM"
+        video="https://youtu.be/3eaPQRMnJak"
         :stack="quizlentineStack"
       />
       
