@@ -50,7 +50,7 @@
           <div class="mediaWrapper">
             <iframe
               class="ytFrame"
-              src="https://www.youtube.com/embed/Ynm7IWdTTFI?autoplay=1&mute=1"
+              src="https://www.youtube.com/embed/Ynm7IWdTTFI?autoplay=1&mute=1&playsinline=1&loop=1&playlist=Ynm7IWdTTFI"
               title="Editing Demo"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

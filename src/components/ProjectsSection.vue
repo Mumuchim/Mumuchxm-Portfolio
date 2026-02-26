@@ -11,10 +11,11 @@
     <section class="cardsRow">
 
       <ProjectCard
-        title="PentoBattle"
+        title="PENTObattle"
         desc="Play 1v1 Pentomino with your friends. Inspired by my math highschool teacher idea."
         :img="pentoImg"
         link="https://pento-battle.vercel.app/"
+        :stack="pentoStack"
       />
       
       <ProjectCard
@@ -22,6 +23,7 @@
         desc="Discord bot that can make rock, paper, scissors with anyone that joined your match."
         :img="jankenImg"
         link="https://discord.com/oauth2/authorize?client_id=1439905828189503549"
+        :stack="jankenStack"
       />
 
       <ProjectCard
@@ -29,6 +31,7 @@
         desc="An web app that lets the user can place different type of pins for an specific report that will pop up in an interactive map."
         :img="fixfinderImg"
         link="https://fix-finder-beta.vercel.app/"
+        :stack="fixFinderStack"
       />
 
       <ProjectCard
@@ -36,6 +39,7 @@
         desc="This is a custom made valentine invitation app for my girlfriend created using python tkinter that's why it's old looking and buggy :<"
         :img="quizlentineImg"
         video="https://youtu.be/etR4FhT6meM"
+        :stack="quizlentineStack"
       />
       
     </section>
@@ -45,6 +49,16 @@
 <script setup>
 import ProjectCard from "./ProjectCard.vue";
 
+import pythonIcon from "../assets/stack/python.png";
+import canvaIcon from "../assets/stack/canva.png";
+import htmlIcon from "../assets/stack/html.png";
+import cssIcon from "../assets/stack/css.png";
+import reactjsIcon from "../assets/stack/reactjs.png";
+import vueIcon from "../assets/stack/vue.png";
+import viteIcon from "../assets/stack/vite.png";
+import supabaseIcon from "../assets/stack/supabase.png";
+import vercelIcon from "../assets/stack/vercel.png";
+
 defineProps({
   id: { type: String, default: "projects" },
   pentoImg: { type: String, default: null },
@@ -52,4 +66,29 @@ defineProps({
   quizlentineImg: { type: String, default: null },
   fixfinderImg: { type: String, default: null },
 });
+
+const quizlentineStack = [
+  { name: "Python", icon: pythonIcon },
+  { name: "Canva", icon: canvaIcon },
+];
+
+const fixFinderStack = [
+  { name: "HTML", icon: htmlIcon },
+  { name: "CSS", icon: cssIcon },
+  { name: "React", icon: reactjsIcon },
+  { name: "Vite", icon: viteIcon },
+  { name: "Canva", icon: canvaIcon },
+  { name: "Supabase", icon: supabaseIcon },
+  { name: "Vercel", icon: vercelIcon },
+];
+
+const pentoStack = [
+  { name: "Vue", icon: vueIcon },
+  { name: "Vite", icon: viteIcon },
+  { name: "Canva", icon: canvaIcon },
+  { name: "Supabase", icon: supabaseIcon },
+  { name: "Vercel", icon: vercelIcon },
+];
+
+const jankenStack = [{ name: "Python", icon: pythonIcon }];
 </script>

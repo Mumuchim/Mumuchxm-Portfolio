@@ -30,7 +30,7 @@ body{
   font-family: var(--font-sans);
   background:
     radial-gradient(700px 400px at 20% 20%, rgba(170,120,255,.12), transparent 60%),
-    radial-gradient(900px 500px at 80% 60%, rgba(120,90,220,.10), transparent 65%),
+    radial-gradient(900px 500px at 80% 60%, rgba(255, 255, 255, 0.1), transparent 65%),
     linear-gradient(180deg, var(--bg0), var(--bg1));
   color: white;
 }

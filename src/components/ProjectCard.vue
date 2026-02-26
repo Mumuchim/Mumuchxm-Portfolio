@@ -13,15 +13,40 @@
       <h3 class="cardTitle">{{ title }}</h3>
       <p class="cardDesc">{{ desc }}</p>
 
+      <!-- ✅ Mini tech stack icons -->
+      <div v-if="stack && stack.length" class="miniStack" aria-label="Project tech stack">
+        <img
+          v-for="s in stack"
+          :key="s.name"
+          class="miniIcon"
+          :src="s.icon"
+          :alt="s.name"
+          :title="s.name"
+          loading="lazy"
+        />
+      </div>
+
       <div class="cardFooter">
         <button
-          class="viewBtn"
+          v-if="video"
+          class="actionBtn"
           :class="{ coming }"
-          :disabled="coming || (!link && !video)"
-          @click="openView"
-          :title="coming ? 'Coming soon' : 'View project'"
+          :disabled="coming"
+          @click="openDemo"
+          :title="coming ? 'Coming soon' : 'Watch demo'"
         >
-          View <span class="arrow">→</span>
+          Demo
+        </button>
+
+        <button
+          v-if="link"
+          class="actionBtn primary"
+          :class="{ coming }"
+          :disabled="coming"
+          @click="openLink"
+          :title="coming ? 'Coming soon' : 'Open link'"
+        >
+          Redirect <span class="arrow">→</span>
         </button>
       </div>
     </div>
@@ -78,6 +103,9 @@ const props = defineProps({
 
   /* ✅ optional external link (if you want View button to open a link instead of modal) */
   link: { type: String, default: null },
+
+  /* ✅ mini stack icons to show on the card */
+  stack: { type: Array, default: () => [] },
 });
 
 const showModal = ref(false);
@@ -98,29 +126,27 @@ const youtubeEmbedUrl = computed(() => {
 
   if (!id) return null;
 
-  // autoplay + muted (browser-friendly). controls=1 so user can pause/seek.
-  return `https://www.youtube.com/embed/${id}?autoplay=1&controls=1&modestbranding=1&rel=0`;
+  // autoplay + loop. controls=1 so user can pause/seek.
+  // NOTE: YouTube looping requires playlist=<videoId>.
+  return `https://www.youtube.com/embed/${id}?autoplay=1&controls=1&modestbranding=1&rel=0&playsinline=1&loop=1&playlist=${id}`;
 });
 
-function openView() {
-  if (props.coming) return;
+function openLink() {
+  if (props.coming || !props.link) return;
+  window.open(props.link, "_blank", "noopener,noreferrer");
+}
 
-  // If you provided a link AND no video, open link
-  if (props.link && !props.video) {
-    window.open(props.link, "_blank", "noopener,noreferrer");
-    return;
-  }
+function openDemo() {
+  if (props.coming || !props.video) return;
 
-  // If you provided a YouTube video, open modal
-  if (props.video && videoIsYoutube.value) {
+  // YouTube → modal for better UX
+  if (videoIsYoutube.value) {
     showModal.value = true;
     return;
   }
 
-  // Otherwise: if you still have a link, open it
-  if (props.link) {
-    window.open(props.link, "_blank", "noopener,noreferrer");
-  }
+  // otherwise, just open in a new tab
+  window.open(props.video, "_blank", "noopener,noreferrer");
 }
 
 function closeModal() {
@@ -150,6 +176,9 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
     inset 0 1px 0 rgba(255,255,255,.06);
 
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   transform: translateY(0);
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, filter .25s ease;
   will-change: transform;
@@ -201,6 +230,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   padding: 14px 14px 16px;
   display:flex;
   flex-direction:column;
+  flex: 1;
   min-height: 158px;
 }
 
@@ -222,20 +252,39 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   flex: 1;
 }
 
+.miniStack{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  opacity: 0.95;
+}
+
+.miniIcon{
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
+}
+
 .cardFooter{
   display:flex;
   justify-content:flex-end;
-  margin-top: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
 }
 
-.viewBtn{
+.actionBtn{
   min-width: 100px;
   height: 34px;
+  line-height: 1;
   padding: 0 16px;
   border-radius: 10px;
 
-  background: linear-gradient(135deg, var(--purple), #8c6cff);
-  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
 
   color: white;
   font-family: Montserrat, sans-serif;
@@ -248,13 +297,21 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   justify-content: center;
   gap: 8px;
 
+  box-sizing: border-box;
+
   cursor: pointer;
 
   transition: transform .25s ease, box-shadow .25s ease, filter .25s ease, opacity .25s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,.22);
+}
+
+.actionBtn.primary{
+  background: linear-gradient(135deg, var(--purple), #8c6cff);
+  border: 1px solid rgba(255,255,255,.15);
   box-shadow: 0 6px 20px rgba(108,74,168,.35);
 }
 
-.viewBtn:hover{
+.actionBtn:hover{
   transform: translateY(-2px);
   box-shadow:
     0 10px 24px rgba(0,0,0,.35),
@@ -262,12 +319,12 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   filter: brightness(1.05);
 }
 
-.viewBtn:active{
+.actionBtn:active{
   transform: translateY(0);
 }
 
-.viewBtn.coming,
-.viewBtn:disabled{
+.actionBtn.coming,
+.actionBtn:disabled{
   opacity: .65;
   cursor: not-allowed;
   filter: saturate(.8);
@@ -276,7 +333,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
 .arrow{
   transition: transform .25s ease;
 }
-.viewBtn:hover .arrow{
+.actionBtn:hover .arrow{
   transform: translateX(4px);
 }
 

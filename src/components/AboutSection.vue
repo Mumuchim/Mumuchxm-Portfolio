@@ -151,7 +151,7 @@
           </div>
 
           <div class="stackFlow">
-            Figma → Vue + Vite → Bootstrap → Supabase → Vercel
+            Figma → Vue / React + Vite → Bootstrap → Supabase → Vercel
           </div>
         </div>
 
@@ -183,6 +183,13 @@
           <div class="stackFlow">
             These are my extra softwares.
           </div>
+        </div>
+
+        <!-- ✅ NEW: NEXT BUTTON (TECH STACK → CERTIFICATIONS) -->
+        <div class="nextRow">
+          <button class="nextBtn" type="button" @click="goNextTab">
+            Next <span class="arrow">→</span>
+          </button>
         </div>
       </template>
     </div>
@@ -243,6 +250,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 /* ✅ Replace icons with your actual file paths in /src/assets/ */
 import figmaIcon from "../assets/stack/figma.png";
 import vueIcon from "../assets/stack/vue.png";
+import reactjsIcon from "../assets/stack/reactjs.png";
 import viteIcon from "../assets/stack/vite.png";
 import bootstrapIcon from "../assets/stack/bootstrap.png";
 import supabaseIcon from "../assets/stack/supabase.png";
@@ -289,7 +297,9 @@ const tabs = [
 
 /* ✅ NEW: next button action */
 function goNextTab() {
-  active.value = "stack";
+  const idx = tabs.findIndex((t) => t.key === active.value);
+  const next = tabs[(idx + 1) % tabs.length];
+  if (next) active.value = next.key;
 }
 
 /* ✅ Overview content (shorter) */
@@ -523,6 +533,7 @@ const langExposure = [
 const webStack = [
   { name: "Figma", icon: figmaIcon },
   { name: "Vue", icon: vueIcon },
+  { name: "React", icon: reactjsIcon },
   { name: "Vite", icon: viteIcon },
   { name: "Bootstrap", icon: bootstrapIcon },
   { name: "Supabase", icon: supabaseIcon },
@@ -757,7 +768,9 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
 
 /* ✅ NEW: Next button styles (match nav hover glow) */
 .nextRow{
-  margin-top: -30px;
+  /* avoid overlapping/colliding with the content above */
+  margin-top: 18px;
+  margin-bottom: 2px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
