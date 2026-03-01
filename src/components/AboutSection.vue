@@ -278,6 +278,7 @@ import capcutIcon from "../assets/stack/capcut.png";
 import canvaIcon from "../assets/stack/canva.png";
 import vscodeIcon from "../assets/stack/vscode.png";
 import chatgptIcon from "../assets/stack/chatgpt.png";
+import claudeIcon from "../assets/stack/claude.png";
 
 /* ✅ Certification images (put them in src/assets/certs/) */
 import diplomaImg from "../assets/certs/diploma.png";
@@ -555,6 +556,7 @@ const additionalTools = [
   { name: "Canva", icon: canvaIcon },
   { name: "VS Code", icon: vscodeIcon },
   { name: "ChatGPT", icon: chatgptIcon },
+  { name: "Claude", icon: claudeIcon },
   { name: "Railway", icon: railwayIcon },
 ];
 

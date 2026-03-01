@@ -51,6 +51,7 @@ import ProjectCard from "./ProjectCard.vue";
 
 import pythonIcon from "../assets/stack/python.png";
 import canvaIcon from "../assets/stack/canva.png";
+import figmaIcon from "../assets/stack/figma.png";
 import htmlIcon from "../assets/stack/html.png";
 import cssIcon from "../assets/stack/css.png";
 import reactjsIcon from "../assets/stack/reactjs.png";
@@ -86,6 +87,7 @@ const pentoStack = [
   { name: "Vue", icon: vueIcon },
   { name: "Vite", icon: viteIcon },
   { name: "Canva", icon: canvaIcon },
+  { name: "Figma", icon: figmaIcon },
   { name: "Supabase", icon: supabaseIcon },
   { name: "Vercel", icon: vercelIcon },
 ];
