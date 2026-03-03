@@ -52,6 +52,11 @@
         <!-- ===== HERO TEXT ===== -->
         <div class="heroPanelInner">
           <div class="heroHeading">
+            <!-- Open to Work badge -->
+            <div class="otwBadge">
+              <span class="otwDot"></span>
+              <span class="otwLabel">Open to Work · Available Now</span>
+            </div>
             <h1 class="heroTitle">JEROME ISAAC CERENEO</h1>
             <p class="heroLocation">based in Philippines.</p>
           </div>
@@ -62,9 +67,19 @@
             <span class="caret"></span>
           </h3>
 
-          <button class="hireBtn" type="button" @click="openContact">
-            CONTACT ME <br>
-          </button>
+          <div class="heroBtns">
+            <button class="hireBtn" type="button" @click="openContact">
+              CONTACT ME
+            </button>
+            <a
+              class="hireBtn resumeBtn"
+              href="/resume.pdf"
+              download="Jerome_Isaac_Cereneo_Resume.pdf"
+              title="Download Resume"
+            >
+              RESUME ↓
+            </a>
+          </div>
         </div>
 
       </div>
@@ -185,6 +200,62 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
 
 /* ===== PANEL ===== */
 .heroPanel{ position: relative; }
+
+/* ===== OPEN TO WORK BADGE ===== */
+.otwBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px 5px 9px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, .10);
+  border: 1px solid rgba(34, 197, 94, .28);
+  font-family: Montserrat, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  color: #6ee89e;
+  width: fit-content;
+}
+
+.otwDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, .5);
+  animation: otwPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes otwPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(74,222,128,.55); }
+  60%  { box-shadow: 0 0 0 6px rgba(74,222,128,.0); }
+  100% { box-shadow: 0 0 0 0 rgba(74,222,128,.0); }
+}
+
+/* ===== HERO BUTTON ROW ===== */
+.heroBtns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.resumeBtn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.07);
+  color: rgba(255,255,255,.88);
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.resumeBtn:hover {
+  background: rgba(183,140,255,.12);
+  border-color: rgba(183,140,255,.35);
+  color: var(--accent);
+}
 
 /* ===== SOCIALS ===== */
 .heroSocials{

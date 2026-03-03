@@ -109,7 +109,7 @@
           <div class="stackGroup">
             <div class="stackLabel">FAMILIAR</div>
             <div class="stackRow" aria-label="Familiar languages">
-              <div class="logoChip" v-for="s in langFamiliar" :key="s.name">
+              <div class="logoChip" v-for="s in langFamiliar" :key="s.name" :data-tip="s.name">
                 <img class="logoImg" :src="s.icon" :alt="s.name" />
                 <div class="logoName">{{ s.name }}</div>
               </div>
@@ -119,7 +119,7 @@
           <div class="stackGroup">
             <div class="stackLabel">WORKING KNOWLEDGE</div>
             <div class="stackRow" aria-label="Working knowledge languages">
-              <div class="logoChip" v-for="s in langWorking" :key="s.name">
+              <div class="logoChip" v-for="s in langWorking" :key="s.name" :data-tip="s.name">
                 <img class="logoImg" :src="s.icon" :alt="s.name" />
                 <div class="logoName">{{ s.name }}</div>
               </div>
@@ -129,7 +129,7 @@
           <div class="stackGroup">
             <div class="stackLabel">NOT CONFIDENT / SLIGHT EXPOSURE</div>
             <div class="stackRow" aria-label="Exposure languages">
-              <div class="logoChip" v-for="s in langExposure" :key="s.name">
+              <div class="logoChip" v-for="s in langExposure" :key="s.name" :data-tip="s.name">
                 <img class="logoImg" :src="s.icon" :alt="s.name" />
                 <div class="logoName">{{ s.name }}</div>
               </div>
@@ -144,7 +144,7 @@
         <div class="stackBlock">
           <div class="stackTitle">WEB DEV STACK</div>
           <div class="stackRow" aria-label="Web dev stack logos">
-            <div class="logoChip" v-for="s in webStack" :key="s.name">
+            <div class="logoChip" v-for="s in webStack" :key="s.name" :data-tip="s.name">
               <img class="logoImg" :src="s.icon" :alt="s.name" />
               <div class="logoName">{{ s.name }}</div>
             </div>
@@ -158,7 +158,7 @@
         <div class="stackBlock">
           <div class="stackTitle">2D GAME DEV STACK (C# + Pixel Art)</div>
           <div class="stackRow" aria-label="2D game dev stack logos">
-            <div class="logoChip" v-for="s in gameStack" :key="s.name">
+            <div class="logoChip" v-for="s in gameStack" :key="s.name" :data-tip="s.name">
               <img class="logoImg" :src="s.icon" :alt="s.name" />
               <div class="logoName">{{ s.name }}</div>
             </div>
@@ -174,15 +174,13 @@
           <div class="stackTitle">ADDITIONAL TOOLS</div>
 
           <div class="stackRow" aria-label="Additional tools logos">
-            <div class="logoChip" v-for="s in additionalTools" :key="s.name">
+            <div class="logoChip" v-for="s in additionalTools" :key="s.name" :data-tip="s.name">
               <img class="logoImg" :src="s.icon" :alt="s.name" />
               <div class="logoName">{{ s.name }}</div>
             </div>
           </div>
 
-          <div class="stackFlow">
-            These are my extra softwares.
-          </div>
+
         </div>
 
         <!-- ✅ NEW: NEXT BUTTON (TECH STACK → CERTIFICATIONS) -->
@@ -325,29 +323,25 @@ const overviewModel = [
   { type: "bold", value: "Java" },
   { type: "text", value: ", and " },
   { type: "bold", value: "Web development" },
-  { type: "text", value: " using" },
-  { type: "bold", value: " Vanilla JS, HTML, CSS" },
-  { type: "text", value: " but i don't really use those anymore." },
+  { type: "text", value: " — though my focus has since shifted toward modern frameworks and tools." },
   { type: "br" },
   { type: "br" },
-  { type: "text", value: "My internship at " },
-  { type: "bold", value: "PrimCare Marketing" },
-  { type: "text", value: " strengthened my advertising knowledge also my " },
-  { type: "bold", value: "photo/video editing" },
-  { type: "text", value: " and practical use of " },
-  { type: "bold", value: "LLMs" },
-  { type: "text", value: ". Now wanting a career in " },
-  { type: "bold", value: "software development " },
+  { type: "text", value: "At " },
+  { type: "bold", value: "Primcare Marketing Corporation" },
+  { type: "text", value: " I was absorbed from intern into a full-time " },
+  { type: "bold", value: "Marketing Associate" },
+  { type: "text", value: " role, building automated message sequences and workflows. I left in late 2025 to fully commit to " },
+  { type: "bold", value: "software development" },
   {
     type: "text",
     value:
-      "— I'm not yet confident with my skills in programming but I'm always ready to learn any language and contribute to real projects",
+      " — eager to keep learning, pick up any stack, and contribute meaningfully to real projects.",
   },
-  { type: "bold", value: " if given a chance." },
 ];
 
 const overviewHtml = ref("");
 const isTyping = ref(false);
+const hasTyped = ref(false); // only animate once
 
 let _timer = null;
 let seg = 0;
@@ -387,7 +381,24 @@ function renderTypedHtml(segIndex, charIndex) {
   return out;
 }
 
+function buildFullHtml() {
+  let out = "";
+  for (const item of overviewModel) {
+    if (item.type === "text") out += escapeHtml(item.value);
+    else if (item.type === "bold") out += `<b>${escapeHtml(item.value)}</b>`;
+    else if (item.type === "br") out += "<br>";
+  }
+  return out;
+}
+
 function startOverviewTyping() {
+  // If already typed before, just show full text immediately
+  if (hasTyped.value) {
+    overviewHtml.value = buildFullHtml();
+    isTyping.value = false;
+    return;
+  }
+
   window.clearInterval(_timer);
   _timer = null;
 
@@ -427,6 +438,7 @@ function startOverviewTyping() {
         window.clearInterval(_timer);
         _timer = null;
         isTyping.value = false;
+        hasTyped.value = true;
       }
     }
   }, 14); // speed (lower = faster)
@@ -1052,16 +1064,58 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   width: 76px;
   height: 76px;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.04);
-  display:grid;
-  place-items:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 6px;
-  pointer-events: none;
   box-shadow:
     0 18px 45px rgba(0,0,0,.18),
     inset 0 1px 0 rgba(255,255,255,.06);
+  position: relative;
+  cursor: default;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.logoChip:hover {
+  transform: translateY(-2px);
+  border-color: rgba(183,140,255,.25);
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.28),
+    0 0 16px rgba(168,140,255,.15),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* Tooltip for logoChip */
+.logoChip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  color: rgba(255,255,255,.90);
+  background: rgba(18,18,28,.92);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.40);
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 200;
+}
+
+.logoChip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 .logoImg{
@@ -1081,10 +1135,15 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
 }
 
 .stackFlow{
-  margin-top: 10px;
+  margin-top: 12px;
   font-family: var(--font-sans);
-  font-size: 12px;
-  color: rgba(255,255,255,.65);
+  font-size: 11px;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .4px;
+  padding: 6px 10px;
+  border-left: 2px solid rgba(183,140,255,.25);
+  background: rgba(183,140,255,.04);
+  border-radius: 0 6px 6px 0;
 }
 
 /* ===== MODAL FIX ===== */

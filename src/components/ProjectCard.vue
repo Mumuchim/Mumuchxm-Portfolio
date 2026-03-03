@@ -1,32 +1,66 @@
 <!-- src/components/ProjectCard.vue -->
 <template>
-  <article class="card">
+  <article class="card" :class="{ localOnly }">
     <div class="thumb">
-      <!-- ✅ IMAGE (default) -->
-      <img v-if="img" :src="img" class="thumbImg" alt="project thumbnail" />
+      <!-- Skeleton shimmer while loading -->
+      <div v-if="img && !imgLoaded" class="thumbSkeleton"></div>
 
-      <!-- ✅ FALLBACK -->
+      <!-- IMAGE -->
+      <img
+        v-if="img"
+        :src="img"
+        class="thumbImg"
+        :class="{ loaded: imgLoaded }"
+        alt="project thumbnail"
+        @load="imgLoaded = true"
+      />
+
+      <!-- FALLBACK -->
       <div v-else class="thumbFake"></div>
+
+      <!-- Status badge pinned to top-right of thumbnail -->
+      <span v-if="status === 'finished'" class="statusBadge finished">✔ Finished</span>
+      <span v-else-if="status === 'in-progress'" class="statusBadge inprogress">⚙ In Progress</span>
+    <!-- Local Only overlay -->
+      <div v-if="localOnly" class="localOnlyOverlay">
+        <span class="localOnlyIcon">💾</span>
+        <span class="localOnlyLabel">Local Only</span>
+      </div>
     </div>
 
     <div class="cardBody">
-      <h3 class="cardTitle">{{ title }}</h3>
+      <div class="cardTitleRow">
+        <h3 class="cardTitle">{{ title }}</h3>
+      </div>
       <p class="cardDesc">{{ desc }}</p>
 
-      <!-- ✅ Mini tech stack icons -->
+      <!-- Mini tech stack icons with custom tooltips -->
       <div v-if="stack && stack.length" class="miniStack" aria-label="Project tech stack">
-        <img
+        <span
           v-for="s in stack"
           :key="s.name"
-          class="miniIcon"
-          :src="s.icon"
-          :alt="s.name"
-          :title="s.name"
-          loading="lazy"
-        />
+          class="tipWrap"
+          :data-tip="s.name"
+        >
+          <img
+            class="miniIcon"
+            :src="s.icon"
+            :alt="s.name"
+            loading="lazy"
+          />
+        </span>
       </div>
 
       <div class="cardFooter">
+        <button
+          v-if="details"
+          class="actionBtn detailsBtn"
+          @click="showDetail = true"
+          title="View project details"
+        >
+          Details
+        </button>
+
         <button
           v-if="video"
           class="actionBtn"
@@ -53,6 +87,63 @@
   </article>
 
   <!-- ✅ VIDEO MODAL (only via View button) -->
+  <!-- PROJECT DETAIL MODAL -->
+  <teleport to="body">
+    <div
+      v-if="showDetail"
+      class="overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Project details"
+      @click.self="showDetail = false"
+    >
+      <div class="modal detailModal">
+        <button class="closeBtn" type="button" @click="showDetail = false" aria-label="Close">✕</button>
+
+        <div class="detailHeader">
+          <div class="detailMeta">
+            <span v-if="status === 'finished'" class="statusBadge finished" style="position:static;backdrop-filter:none">✔ Finished</span>
+            <span v-else-if="status === 'in-progress'" class="statusBadge inprogress" style="position:static;backdrop-filter:none">⚙ In Progress</span>
+          </div>
+          <h2 class="detailTitle">{{ title }}</h2>
+        </div>
+
+        <div v-if="img" class="detailThumb">
+          <img :src="img" :alt="title" />
+        </div>
+
+        <div class="detailBody">
+          <div v-if="details.problem" class="detailSection">
+            <div class="detailSectionLabel">🔍 Problem</div>
+            <p>{{ details.problem }}</p>
+          </div>
+          <div v-if="details.built" class="detailSection">
+            <div class="detailSectionLabel">🔨 What I Built</div>
+            <p>{{ details.built }}</p>
+          </div>
+          <div v-if="details.learned" class="detailSection">
+            <div class="detailSectionLabel">💡 What I Learned</div>
+            <p>{{ details.learned }}</p>
+          </div>
+        </div>
+
+        <div v-if="stack && stack.length" class="detailStack">
+          <div class="detailSectionLabel">🛠 Stack</div>
+          <div class="detailStackIcons">
+            <span v-for="s in stack" :key="s.name" class="tipWrap" :data-tip="s.name">
+              <img class="detailIcon" :src="s.icon" :alt="s.name" />
+            </span>
+          </div>
+        </div>
+
+        <div class="detailActions">
+          <button v-if="video" class="actionBtn" @click="openDemo">Watch Demo</button>
+          <button v-if="link" class="actionBtn primary" @click="openLink">Open Project <span class="arrow">→</span></button>
+        </div>
+      </div>
+    </div>
+  </teleport>
+
   <teleport to="body">
     <div
       v-if="showModal"
@@ -106,9 +197,20 @@ const props = defineProps({
 
   /* ✅ mini stack icons to show on the card */
   stack: { type: Array, default: () => [] },
+
+  /* ✅ project status badge: 'finished' | 'in-progress' | null */
+  status: { type: String, default: null },
+
+  /* ✅ project detail write-up: { problem, built, learned } */
+  details: { type: Object, default: null },
+
+  /* ✅ local-only projects: dimmed with overlay */
+  localOnly: { type: Boolean, default: false },
 });
 
 const showModal = ref(false);
+const showDetail = ref(false);
+const imgLoaded = ref(false);
 
 const videoIsYoutube = computed(() => {
   if (!props.video) return false;
@@ -154,7 +256,10 @@ function closeModal() {
 }
 
 function onKeydown(e) {
-  if (e.key === "Escape" && showModal.value) closeModal();
+  if (e.key === "Escape") {
+    if (showDetail.value) { showDetail.value = false; return; }
+    if (showModal.value) closeModal();
+  }
 }
 
 onMounted(() => window.addEventListener("keydown", onKeydown));
@@ -207,7 +312,12 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   height:100%;
   object-fit:cover;
   display:block;
-  transition: transform .25s ease;
+  opacity: 0;
+  transition: transform .25s ease, opacity .35s ease;
+}
+
+.thumbImg.loaded{
+  opacity: 1;
 }
 
 .card:hover .thumbImg{
@@ -234,13 +344,49 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   min-height: 158px;
 }
 
+.cardTitleRow {
+  margin-bottom: 8px;
+}
+
 .cardTitle{
-  margin: 0 0 8px;
+  margin: 0;
   font-family: Orbitron, sans-serif;
   font-size: 13px;
   letter-spacing: .6px;
   font-weight: 800;
   color: rgba(255,255,255,.95);
+}
+
+/* Badge pinned to top-right corner of thumbnail */
+.statusBadge {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  z-index: 10;
+
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  padding: 4px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+
+  backdrop-filter: blur(6px);
+}
+
+.statusBadge.finished {
+  background: rgba(20, 80, 45, 0.72);
+  border: 1px solid rgba(60, 200, 120, 0.50);
+  color: #6ee89e;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+.statusBadge.inprogress {
+  background: rgba(80, 55, 10, 0.72);
+  border: 1px solid rgba(255, 180, 50, 0.50);
+  color: #ffd97d;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 
 .cardDesc{
@@ -269,18 +415,18 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
 }
 
 .cardFooter{
-  display:flex;
-  justify-content:flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 8px;
   margin-top: 12px;
 }
 
 .actionBtn{
-  min-width: 100px;
+  width: 100%;
   height: 34px;
   line-height: 1;
-  padding: 0 16px;
+  padding: 0 10px;
   border-radius: 10px;
 
   background: rgba(255,255,255,.08);
@@ -289,17 +435,17 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   color: white;
   font-family: Montserrat, sans-serif;
   font-weight: 700;
-  font-size: 12px;
-  letter-spacing: .6px;
+  font-size: 11px;
+  letter-spacing: .5px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
 
   box-sizing: border-box;
-
   cursor: pointer;
+  white-space: nowrap;
 
   transition: transform .25s ease, box-shadow .25s ease, filter .25s ease, opacity .25s ease;
   box-shadow: 0 6px 20px rgba(0,0,0,.22);
@@ -380,5 +526,161 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   color: rgba(255,255,255,.92);
   cursor: pointer;
   z-index: 2;
+}
+.detailsBtn {
+  background: rgba(255,255,255,.05);
+  border-color: rgba(255,255,255,.10);
+  color: rgba(255,255,255,.72);
+}
+
+.detailsBtn:hover {
+  background: rgba(183,140,255,.10);
+  border-color: rgba(183,140,255,.28);
+  color: var(--accent);
+}
+
+/* Detail Modal */
+.detailModal {
+  width: min(780px, 96vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+}
+
+.detailHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 44px;
+}
+
+.detailMeta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.detailTitle {
+  margin: 0;
+  font-family: Orbitron, sans-serif;
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 800;
+  letter-spacing: .6px;
+  color: rgba(255,255,255,.95);
+}
+
+.detailThumb {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  max-height: 240px;
+  display: flex;
+}
+
+.detailThumb img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.detailBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detailSection {
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+}
+
+.detailSection p {
+  margin: 8px 0 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255,255,255,.78);
+}
+
+.detailSectionLabel {
+  font-family: Orbitron, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+
+.detailStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detailStackIcons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.detailIcon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
+}
+
+.detailActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+
+/* Local-only card dimming */
+.card.localOnly {
+  opacity: 0.55;
+  filter: grayscale(0.3);
+}
+
+.localOnlyOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(10,10,18,.52);
+  backdrop-filter: blur(3px);
+  border-radius: 0;
+  pointer-events: none;
+}
+
+.localOnlyIcon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.localOnlyLabel {
+  font-family: Orbitron, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.72);
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 4px 11px;
+  border-radius: 20px;
 }
 </style>
