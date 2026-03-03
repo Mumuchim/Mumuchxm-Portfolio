@@ -1,9 +1,9 @@
 <template>
-  <section :id="id" class="stackSection">
+  <section :id="id" class="tabSection">
 
-    <div class="stackHeader">
-      <h2 class="stackTitle">TECH STACK</h2>
-      <p class="stackSub">Tools, languages &amp; technologies I work with</p>
+    <div class="tabPlaceholder skillsHeader">
+      <h2 class="tabTitle">TECH STACK</h2>
+      <p class="tabDesc">Tools, languages &amp; technologies I work with</p>
     </div>
 
     <!-- Row 1: scrolls left -->
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Row 2: scrolls right -->
-    <div class="marqueeWrapper" style="margin-top: 18px;">
+    <div class="marqueeWrapper" style="margin-top: 18px; margin-bottom: clamp(40px, 6vw, 72px);">
       <div class="fadeLeft"></div>
       <div class="fadeRight"></div>
       <div class="marqueeTrack trackRight">
@@ -111,29 +111,9 @@ const row2 = [
 </script>
 
 <style scoped>
-.stackSection {
-  padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 48px);
-}
-
-.stackHeader {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.stackTitle {
-  font-family: var(--font-tech, 'Orbitron', sans-serif);
-  font-size: clamp(20px, 3vw, 28px);
-  font-weight: 900;
-  letter-spacing: 4px;
-  color: #fff;
-  margin: 0 0 10px;
-}
-
-.stackSub {
-  font-size: 13px;
-  color: rgba(255,255,255,.5);
-  margin: 0;
-  letter-spacing: .5px;
+/* Header padding tweak — tabPlaceholder already handles the title/desc */
+.skillsHeader {
+  padding-bottom: 40px;
 }
 
 /* ── Marquee wrapper ── */
