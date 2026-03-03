@@ -95,101 +95,6 @@
           </article>
         </div>
       </template>
-
-      <!-- ===== TECH STACK ===== -->
-      <template v-else>
-        <div class="sectionHead">
-          <div class="sectionTitle">TECH STACK</div>
-        </div>
-
-        <!-- ✅ Languages tier block -->
-        <div class="stackBlock">
-          <div class="stackTitle">LANGUAGES (KNOWS BASIC SYNTAX)</div>
-
-          <div class="stackGroup">
-            <div class="stackLabel">FAMILIAR</div>
-            <div class="stackRow" aria-label="Familiar languages">
-              <div class="logoChip" v-for="s in langFamiliar" :key="s.name" :data-tip="s.name">
-                <img class="logoImg" :src="s.icon" :alt="s.name" />
-                <div class="logoName">{{ s.name }}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="stackGroup">
-            <div class="stackLabel">WORKING KNOWLEDGE</div>
-            <div class="stackRow" aria-label="Working knowledge languages">
-              <div class="logoChip" v-for="s in langWorking" :key="s.name" :data-tip="s.name">
-                <img class="logoImg" :src="s.icon" :alt="s.name" />
-                <div class="logoName">{{ s.name }}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="stackGroup">
-            <div class="stackLabel">NOT CONFIDENT / SLIGHT EXPOSURE</div>
-            <div class="stackRow" aria-label="Exposure languages">
-              <div class="logoChip" v-for="s in langExposure" :key="s.name" :data-tip="s.name">
-                <img class="logoImg" :src="s.icon" :alt="s.name" />
-                <div class="logoName">{{ s.name }}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="stackFlow">
-            Familiar: Python, C++ • Working: JS/HTML/CSS • Exposure: C#, Java, SQL
-          </div>
-        </div>
-
-        <div class="stackBlock">
-          <div class="stackTitle">WEB DEV STACK</div>
-          <div class="stackRow" aria-label="Web dev stack logos">
-            <div class="logoChip" v-for="s in webStack" :key="s.name" :data-tip="s.name">
-              <img class="logoImg" :src="s.icon" :alt="s.name" />
-              <div class="logoName">{{ s.name }}</div>
-            </div>
-          </div>
-
-          <div class="stackFlow">
-            Figma → Vue / React + Vite → Bootstrap → Supabase → Vercel
-          </div>
-        </div>
-
-        <div class="stackBlock">
-          <div class="stackTitle">2D GAME DEV STACK (C# + Pixel Art)</div>
-          <div class="stackRow" aria-label="2D game dev stack logos">
-            <div class="logoChip" v-for="s in gameStack" :key="s.name" :data-tip="s.name">
-              <img class="logoImg" :src="s.icon" :alt="s.name" />
-              <div class="logoName">{{ s.name }}</div>
-            </div>
-          </div>
-
-          <div class="stackFlow">
-            Aseprite → Unity → WebGL → itch.io
-          </div>
-        </div>
-
-        <!-- ✅ NEW: ADDITIONAL TOOLS (with ChatGPT logo) -->
-        <div class="stackBlock">
-          <div class="stackTitle">ADDITIONAL TOOLS</div>
-
-          <div class="stackRow" aria-label="Additional tools logos">
-            <div class="logoChip" v-for="s in additionalTools" :key="s.name" :data-tip="s.name">
-              <img class="logoImg" :src="s.icon" :alt="s.name" />
-              <div class="logoName">{{ s.name }}</div>
-            </div>
-          </div>
-
-
-        </div>
-
-        <!-- ✅ NEW: NEXT BUTTON (TECH STACK → CERTIFICATIONS) -->
-        <div class="nextRow">
-          <button class="nextBtn" type="button" @click="goNextTab">
-            Next <span class="arrow">→</span>
-          </button>
-        </div>
-      </template>
     </div>
 
     <!-- ✅ CERT PREVIEW MODAL -->
@@ -290,8 +195,7 @@ const active = ref("overview");
 
 const tabs = [
   { key: "overview", label: "OVERVIEW" },
-  { key: "stack", label: "TECH STACK" },
-  { key: "certs", label: "CERTIFICATIONS" },
+{ key: "certs", label: "CERTIFICATIONS" },
 ];
 
 /* ✅ NEW: next button action */
@@ -323,7 +227,7 @@ const overviewModel = [
   { type: "bold", value: "Java" },
   { type: "text", value: ", and " },
   { type: "bold", value: "Web development" },
-  { type: "text", value: " — though my focus has since shifted toward modern frameworks and tools." },
+  { type: "text", value: "... though my focus has since shifted toward modern frameworks and tools." },
   { type: "br" },
   { type: "br" },
   { type: "text", value: "At " },
@@ -335,7 +239,7 @@ const overviewModel = [
   {
     type: "text",
     value:
-      " — eager to keep learning, pick up any stack, and contribute meaningfully to real projects.",
+      " and now eager to improve my programming skills and pick up any stack, and contribute meaningfully to real projects.",
   },
 ];
 

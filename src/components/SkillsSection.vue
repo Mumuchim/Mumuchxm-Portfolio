@@ -1,195 +1,241 @@
 <template>
-  <section :id="id" class="tabSection">
-    <div class="tabPlaceholder">
-      <h2 class="tabTitle">ADDITIONAL SKILLS SHOWCASE</h2>
+  <section :id="id" class="stackSection">
 
-      <p class="tabSubtitle">
-        Additional creative and practical skills beyond programming.
-      </p>
+    <div class="stackHeader">
+      <h2 class="stackTitle">TECH STACK</h2>
+      <p class="stackSub">Tools, languages &amp; technologies I work with</p>
+    </div>
 
-      <!-- Gallery Grid -->
-      <div class="galleryGrid">
-        <!-- Pixel Art Card -->
-        <article class="galleryCard empty">
-          <div class="comingSoonOverlay">
-            <span class="comingSoonIcon">&#x1F6A7;</span>
-            <span class="comingSoonLabel">Coming Soon</span>
+    <!-- Row 1: scrolls left -->
+    <div class="marqueeWrapper">
+      <div class="fadeLeft"></div>
+      <div class="fadeRight"></div>
+      <div class="marqueeTrack trackLeft">
+        <div class="marqueeInner" v-for="_ in 2" :key="_">
+          <div class="stackItem" v-for="item in row1" :key="item.name + _">
+            <div class="stackIcon">
+              <img :src="item.img" :alt="item.name" loading="lazy" />
+            </div>
+            <span class="stackLabel">{{ item.name }}</span>
           </div>
-          <div class="mediaWrapper">
-            <img
-              src="https://via.placeholder.com/800x600?text=Pixel+Art+Sample"
-              alt="Pixel art sample"
-              loading="lazy"
-            />
-          </div>
-          <div class="cardBody">
-            <h3>Pixel Art Practice</h3>
-            <p>Created using Aseprite. Focus on character sprites and environment tiles.</p>
-          </div>
-        </article>
-
-        <!-- Sprite Sheet Card -->
-        <article class="galleryCard empty">
-          <div class="comingSoonOverlay">
-            <span class="comingSoonIcon">&#x1F6A7;</span>
-            <span class="comingSoonLabel">Coming Soon</span>
-          </div>
-          <div class="mediaWrapper">
-            <img
-              src="https://via.placeholder.com/800x600?text=Sprite+Sheet"
-              alt="Sprite sheet sample"
-              loading="lazy"
-            />
-          </div>
-          <div class="cardBody">
-            <h3>Sprite Sheet</h3>
-            <p>Basic animation frames and character movement practice.</p>
-          </div>
-        </article>
-
-        <!-- Video Editing Card -->
-        <article class="galleryCard empty">
-          <div class="comingSoonOverlay">
-            <span class="comingSoonIcon">&#x1F6A7;</span>
-            <span class="comingSoonLabel">Coming Soon</span>
-          </div>
-          <div class="mediaWrapper">
-            <iframe
-              class="ytFrame"
-              src="https://www.youtube.com/embed/Ynm7IWdTTFI?autoplay=1&mute=1&playsinline=1&loop=1&playlist=Ynm7IWdTTFI"
-              title="Editing Demo"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              loading="lazy"
-            ></iframe>
-          </div>
-          <div class="cardBody">
-            <h3>Editing Demo</h3>
-            <p>Sample video editing work including cuts, captions, and transitions.</p>
-          </div>
-        </article>
+        </div>
       </div>
     </div>
+
+    <!-- Row 2: scrolls right -->
+    <div class="marqueeWrapper" style="margin-top: 18px;">
+      <div class="fadeLeft"></div>
+      <div class="fadeRight"></div>
+      <div class="marqueeTrack trackRight">
+        <div class="marqueeInner" v-for="_ in 2" :key="_">
+          <div class="stackItem" v-for="item in row2" :key="item.name + _">
+            <div class="stackIcon">
+              <img :src="item.img" :alt="item.name" loading="lazy" />
+            </div>
+            <span class="stackLabel">{{ item.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 </template>
 
 <script setup>
-defineProps({
-  id: { type: String, default: "skills" },
-});
+import imgHtml        from '../assets/stack/html.png';
+import imgCss         from '../assets/stack/css.png';
+import imgJs          from '../assets/stack/javascript.png';
+import imgVue         from '../assets/stack/vue.png';
+import imgReact       from '../assets/stack/reactjs.png';
+import imgBootstrap   from '../assets/stack/bootstrap.png';
+import imgVite        from '../assets/stack/vite.png';
+import imgPython      from '../assets/stack/python.png';
+import imgCpp         from '../assets/stack/cpp.png';
+import imgCsharp      from '../assets/stack/csharp.png';
+import imgJava        from '../assets/stack/java.png';
+import imgSql         from '../assets/stack/sql.png';
+import imgSupabase    from '../assets/stack/supabase.png';
+import imgGithub      from '../assets/stack/github.png';
+import imgVscode      from '../assets/stack/vscode.png';
+import imgFigma       from '../assets/stack/figma.png';
+import imgCanva       from '../assets/stack/canva.png';
+import imgCapcut      from '../assets/stack/capcut.png';
+import imgUnity       from '../assets/stack/unity.png';
+import imgWebgl       from '../assets/stack/webgl.png';
+import imgAseprite    from '../assets/stack/aseprite.png';
+import imgUipath      from '../assets/stack/uipath.png';
+import imgMacro       from '../assets/stack/macro.png';
+import imgRailway     from '../assets/stack/railway.png';
+import imgVercel      from '../assets/stack/vercel.png';
+import imgItch        from '../assets/stack/itch.png';
+import imgClaude      from '../assets/stack/claude.png';
+import imgChatgpt     from '../assets/stack/chatgpt.png';
+import imgDiscord     from '../assets/stack/discord.png';
+
+defineProps({ id: { type: String, default: 'skills' } });
+
+const row1 = [
+  { name: 'HTML',        img: imgHtml },
+  { name: 'CSS',         img: imgCss },
+  { name: 'JavaScript',  img: imgJs },
+  { name: 'Vue.js',      img: imgVue },
+  { name: 'React',       img: imgReact },
+  { name: 'Bootstrap',   img: imgBootstrap },
+  { name: 'Vite',        img: imgVite },
+  { name: 'Python',      img: imgPython },
+  { name: 'C++',         img: imgCpp },
+  { name: 'C#',          img: imgCsharp },
+  { name: 'Java',        img: imgJava },
+  { name: 'SQL',         img: imgSql },
+  { name: 'Supabase',    img: imgSupabase },
+  { name: 'GitHub',      img: imgGithub },
+  { name: 'VS Code',     img: imgVscode },
+];
+
+const row2 = [
+  { name: 'Figma',       img: imgFigma },
+  { name: 'Canva',       img: imgCanva },
+  { name: 'CapCut',      img: imgCapcut },
+  { name: 'Unity',       img: imgUnity },
+  { name: 'WebGL',       img: imgWebgl },
+  { name: 'Aseprite',    img: imgAseprite },
+  { name: 'UiPath',      img: imgUipath },
+  { name: 'Macro',       img: imgMacro },
+  { name: 'Railway',     img: imgRailway },
+  { name: 'Vercel',      img: imgVercel },
+  { name: 'Itch.io',     img: imgItch },
+  { name: 'Claude AI',   img: imgClaude },
+  { name: 'ChatGPT',     img: imgChatgpt },
+  { name: 'Discord',     img: imgDiscord },
+];
 </script>
 
 <style scoped>
-.tabSubtitle {
-  margin-top: 8px;
-  opacity: 0.8;
-  font-size: 15px;
+.stackSection {
+  padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 48px);
 }
 
-.galleryGrid {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 22px;
+.stackHeader {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.galleryCard {
-  background: rgba(18,18,26,0.92);
-  border-radius: 14px;
-  overflow: hidden;
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 18px 40px rgba(0,0,0,.22);
+.stackTitle {
+  font-family: var(--font-tech, 'Orbitron', sans-serif);
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.stackSub {
+  font-size: 13px;
+  color: rgba(255,255,255,.5);
+  margin: 0;
+  letter-spacing: .5px;
+}
+
+/* ── Marquee wrapper ── */
+.marqueeWrapper {
   position: relative;
+  overflow: hidden;
 }
 
-.galleryCard:hover {
-  transform: translateY(-6px);
-  border-color: rgba(183,140,255,.22);
-  box-shadow: 0 26px 70px rgba(0,0,0,.34);
-}
-
-/* Dimmed empty state */
-.galleryCard.empty {
-  opacity: 0.42;
-  filter: grayscale(0.45);
+/* Fade edges */
+.fadeLeft,
+.fadeRight {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
   pointer-events: none;
 }
+.fadeLeft  { left: 0;  background: linear-gradient(to right, rgba(15,15,20,1) 0%, transparent 100%); }
+.fadeRight { right: 0; background: linear-gradient(to left,  rgba(15,15,20,1) 0%, transparent 100%); }
 
-/* Coming Soon Overlay */
-.comingSoonOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
+/* Track */
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+}
+
+.trackLeft  { animation: scrollLeft  35s linear infinite; }
+.trackRight { animation: scrollRight 35s linear infinite; }
+
+.marqueeTrack:hover { animation-play-state: paused; }
+
+@keyframes scrollLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scrollRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Inner row (duplicated) */
+.marqueeInner {
+  display: flex;
+  gap: 12px;
+  padding: 4px 6px;
+  flex-shrink: 0;
+}
+
+/* Each item */
+.stackItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: rgba(10, 10, 18, 0.55);
-  backdrop-filter: blur(4px);
+  gap: 8px;
+  padding: 14px 18px;
   border-radius: 14px;
-  pointer-events: none;
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.03);
+  min-width: 90px;
+  cursor: default;
+  transition: border-color .25s ease, background .25s ease, transform .25s ease, box-shadow .25s ease;
 }
 
-.comingSoonIcon {
-  font-size: 30px;
-  line-height: 1;
+.stackItem:hover {
+  border-color: rgba(183,140,255,.35);
+  background: rgba(183,140,255,.08);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.3), 0 0 18px rgba(183,140,255,.15);
 }
 
-.comingSoonLabel {
-  font-family: Orbitron, sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.80);
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.18);
-  padding: 5px 14px;
-  border-radius: 20px;
-}
-
-.mediaWrapper {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: rgba(0,0,0,.22);
+.stackIcon {
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
-.mediaWrapper img {
+.stackIcon img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  object-fit: contain;
+  filter: brightness(.85) saturate(.9);
+  transition: filter .25s ease;
 }
 
-.ytFrame {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
+.stackItem:hover .stackIcon img {
+  filter: brightness(1.1) saturate(1.1) drop-shadow(0 0 6px rgba(183,140,255,.4));
 }
 
-.cardBody {
-  padding: 16px;
+.stackLabel {
+  font-family: var(--font-tech, 'Orbitron', sans-serif);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,.55);
+  text-align: center;
+  transition: color .25s;
+  white-space: nowrap;
 }
 
-.cardBody h3 {
-  margin: 0 0 6px;
-  font-size: 18px;
-  font-family: var(--font-tech, inherit);
-  letter-spacing: .6px;
-}
-
-.cardBody p {
-  margin: 0;
-  font-size: 14px;
-  opacity: 0.85;
-  line-height: 1.5;
+.stackItem:hover .stackLabel {
+  color: rgba(183,140,255,.9);
 }
 </style>

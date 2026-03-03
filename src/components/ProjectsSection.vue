@@ -3,7 +3,9 @@
     <div class="tabPlaceholder">
       <h2 class="tabTitle">PROJECTS</h2>
       <p class="tabDesc">
-        Some of the things I built recently — personal projects, experiments, and systems I'm improving.
+        These aren't all of my coding experiences, but they're the ones worth displaying: <br>
+
+      </br>
       </p>
 
       <!-- Tech Filter Bar -->
@@ -52,8 +54,10 @@ import { ref, computed } from "vue";
 import ProjectCard from "./ProjectCard.vue";
 
 import pythonIcon    from "../assets/stack/python.png";
+import flaskIcon    from "../assets/stack/flask.png";
 import canvaIcon     from "../assets/stack/canva.png";
 import figmaIcon     from "../assets/stack/figma.png";
+import jsIcon      from "../assets/stack/javascript.png";
 import htmlIcon      from "../assets/stack/html.png";
 import cssIcon       from "../assets/stack/css.png";
 import reactjsIcon   from "../assets/stack/reactjs.png";
@@ -61,6 +65,7 @@ import vueIcon       from "../assets/stack/vue.png";
 import viteIcon      from "../assets/stack/vite.png";
 import supabaseIcon  from "../assets/stack/supabase.png";
 import vercelIcon    from "../assets/stack/vercel.png";
+import dycaiThumb   from "../assets/dyc-ai-thumbnail.png";
 
 // ── Filter options ──────────────────────────────────────────
 const filters = [
@@ -77,15 +82,15 @@ const activeFilter = ref("all");
 const projects = computed(() => [
   {
     title:  "FixFinder",
-    desc:   "My college thesis — a community reporting web app. I created the original concept, led the group, and continue developing it independently post-graduation.",
+    desc:   "This is my college thesis inspired by genshin interactive map like placing pins too but specifically for reporting problems that requires maintenance in our school.",
     img:    null, // injected via prop below
     link:   "https://fix-finder-beta.vercel.app/",
     status: "finished",
     tags:   ["html", "css", "react", "vite", "canva", "supabase", "vercel"],
     details: {
-      problem: 'Community issues like potholes, broken streetlights, and flooding often go unaddressed because there was no easy way to visualize and report them. I came up with the original concept for my thesis and led the group that built version 1.0.',
-      built: 'The current version is an improved iteration beyond the original thesis build — redesigned and re-engineered by me alone after graduation. Users drop categorized pins (Infrastructure, Safety, Environment) on an interactive map, with reports persisting in real-time via Supabase. Built with React + Vite, deployed on Vercel. As the original concept creator and thesis group leader, I hold the intellectual right to continue developing it.',
-      learned: "Leading a team project from concept to defense, then independently continuing it post-graduation. Learned how the version you ship for school and the version you're proud of can be very different things.",
+      problem: 'Community issues like potholes, broken streetlights, and technical problems often go unaddressed because there was no easy way to visualize and report them. I came up with the original concept for my thesis and led the group that built version 1.0.',
+      built: 'The current version is just an improved with added UI design than the original thesis build... I redesigned and re-engineered it after graduation. I added notifications, new permissions, additional ui for admins, and more designs. Now it is persisting in real-time via Supabase. Built with React + Vite, deployed on Vercel. As the original concept creator and thesis group leader, I hold the intellectual right to continue developing it for fun.',
+      learned: "I learned how to use Supabase, how to deploy using Vercel, I upgraded from Native JS to React JS, and from LiveShare extension... I learned the existence of Vite, and some Agile Methologies.",
     },
     stack: [
       { name: "HTML",     icon: htmlIcon     },
@@ -99,15 +104,15 @@ const projects = computed(() => [
   },
   {
     title:  "PENTObattle",
-    desc:   "A feature-rich Pentomino battle game with multiple modes, AI opponents, real-time ranked matches, lobbies, and full account support.",
+    desc:   "A Board game like chess using Pentominos to battle until your opponent can't place a piece anymore... It's actually fun to play but not to code :< ",
     img:    null,
     link:   "https://pento-battle.vercel.app/",
     status: "in-progress",
     tags:   ["vue", "vite", "canva", "figma", "supabase", "vercel"],
     details: {
-      problem: 'Inspired by my high school math teacher who ran Pentomino games in class — there was no digital version worth playing, so I decided to build one that actually has depth.',
-      built: 'A full-featured browser game built with Vue + Vite and Supabase. Went far beyond the original concept: multiple game modes, an AI opponent with adjustable difficulty levels, real-time multiplayer (quick play, ranked, and custom lobbies), guest and account-based play, and a full matchmaking system. Learned Figma from scratch to design the UI, and used AI-assisted development to implement complex systems faster.',
-      learned: 'Real-time game state sync, turn validation across clients, AI move evaluation, Figma UI/UX design, Supabase auth and database architecture, and how to scope and manage a project that keeps growing.',
+      problem: 'Inspired by my high school math teacher who ran Pentomino games in school, there was no digital version of this yet so maybe this is the first, so I decided to build a simple one but turns out to be more ambitious.',
+      built: 'A full-featured browser game built with Vue + Vite and Supabase. Went far beyond the original concept: multiple game modes, an AI opponent with adjustable difficulty levels, real-time multiplayer (quick play, ranked, and custom lobbies), guest and account-based play, and a full matchmaking system. I used AI-assisted development to implement complex systems faster.',
+      learned: 'Real-time game state syncing is hard to pull using database so I did learned now the existence of Prompt Engineering, used it to turn validation across clients, AI training, I also learned to use Figma in projects, Supabase auth and database architecture, and how to scope and manage a project that keeps growing.',
     },
     stack: [
       { name: "Vue",      icon: vueIcon      },
@@ -120,13 +125,13 @@ const projects = computed(() => [
   },
   {
     title:  "Janken Pom",
-    desc:   "Discord bot that lets anyone play rock, paper, scissors with whoever joins your match.",
+    desc:   "A very simple Discord bot that lets anyone play rock, paper, scissors with whoever joins your match... I also added ranks and leaderboard here hehe ;-;",
     img:    null,
     link:   "https://discord.com/oauth2/authorize?client_id=1439905828189503549",
     status: "finished",
     tags:   ["python"],
     details: {
-      problem: 'Wanted a fun Discord bot that my friend group could use to settle arguments or just mess around with — something more interactive than a poll.',
+      problem: 'Wanted a fun Discord bot that my friend group could use to settle arguments or just mess around with ... something more interactive than a poll.',
       built: 'A Discord bot that hosts rock-paper-scissors matches. Players join a lobby, the bot manages turns, tracks wins, and announces results in the channel.',
       learned: 'Discord bot architecture with discord.py, managing async event loops, and how to design bot interactions that feel natural in a chat context.',
     },
@@ -134,13 +139,13 @@ const projects = computed(() => [
   },
   {
     title:  "project: QUIZLENTINE",
-    desc:   "A custom valentine invitation app for my girlfriend, built with Python Tkinter — hence the vintage look :>",
+    desc:   "A custom valentine invitation app for my girlfriend, built with Python Tkinter because I lack knowledge about tech stacks before... so yeah, it has a vintage look :>",
     img:    null,
     video:  "https://youtu.be/3eaPQRMnJak",
     status: "finished",
     tags:   ["python", "canva"],
     details: {
-      problem: 'Wanted to make a Valentine invitation for my girlfriend that was more memorable than a message — something she had to interact with.',
+      problem: 'Wanted to make a Valentine invitation for my girlfriend that was more memorable than a message ... something she had to interact with.',
       built: 'A Python Tkinter desktop app that walks her through a short quiz about our relationship, ending with the invitation. Designed all assets in Canva.',
       learned: 'Building a GUI with Tkinter, packaging a Python app to run standalone, and that even a janky-looking project can be meaningful when made with care.',
     },
@@ -151,21 +156,23 @@ const projects = computed(() => [
   },
   {
     title:  "DYC-AI ChatBot",
-    desc:   "A school chatbot for Dr. Yanga's Colleges built with a YouTube-guided PyTorch/NLTK base — our contribution was the full frontend, the entire knowledge base, and training the bot on real school data.",
+    desc:   "A school chatbot for Dr. Yanga's Colleges built with a YouTube-guided PyTorch/NLTK base ... our contribution was the full frontend, the entire knowledge base, and training the bot on real school data.",
     img:    null,
     link:   null,
     video:  null,
     status: "finished",
-    localOnly: true,
     tags:   ["python", "flask"],
     details: {
-      problem: "Dr. Yanga's Colleges had no automated way to handle repetitive student inquiries about admissions, enrollment, fees, and scholarships — staff answered the same questions manually every day.",
-      built: "Built as a Software Engineering group project (BSCS-3A, 2023-2024). We followed a YouTube tutorial for the PyTorch + NLTK chatbot architecture and Flask deployment — our actual work was building both frontends from scratch, designing the full auth system (login/register via XAMPP/MySQL), and creating the entire knowledge base: 9 categories, 80+ intents covering admissions, enrollment, scholarships, discounts, exams, academic calendar, student services, disciplinary code, and campus locations. The bot is named DYChat. Currently local-only due to XAMPP and Conda dependencies.",
-      learned: "How a trained intent-classification chatbot works end-to-end, Flask routing and templating, MySQL-backed auth, and how much work goes into a genuinely useful knowledge base — getting the bot to actually answer real student questions correctly was the hard part.",
+      problem: "Dr. Yanga's Colleges had no automated way to handle repetitive student inquiries about admissions, enrollment, fees, and scholarships ... staff answered the same questions manually every day.",
+      built: "Built as a Software Engineering group project (BSCS-3A, 2023-2024). We followed a YouTube tutorial for the PyTorch + NLTK chatbot architecture and Flask deployment ... our actual work was building both frontends from scratch, designing the full auth system (login/register via XAMPP/MySQL), and creating the entire knowledge base: 9 categories, 80+ intents covering admissions, enrollment, scholarships, discounts, exams, academic calendar, student services, disciplinary code, and campus locations. The bot is named DYChat. Currently local-only due to XAMPP and Conda dependencies.",
+      learned: "I learned that injecting and training AI is kinda traumatizing, debugging why it predicts the wrong intent over and over makes you question your life choices... but it forced me to understand how data quality, training structure, and edge cases directly affect how “intelligent” a system really is, I learned MySQL-backed auth, It is actually scary getting the bot to actually answer real student questions correctly... And lastly, I learned that creating it in local and not deploying it before is such a waste.",
     },
     stack: [
+      { name: "HTML",     icon: htmlIcon     },
+      { name: "CSS",      icon: cssIcon      },
+      { name: "JavaScript",      icon: jsIcon      },
       { name: "Python", icon: pythonIcon },
-      { name: "Flask",  icon: null },
+      { name: "Flask",  icon: flaskIcon },
     ],
   },
 ]);
@@ -185,7 +192,7 @@ const projectsWithImages = computed(() =>
     if (p.title === "PENTObattle")         return { ...p, img: props.pentoImg };
     if (p.title === "Janken Pom")          return { ...p, img: props.jankenImg };
     if (p.title === "project: QUIZLENTINE") return { ...p, img: props.quizlentineImg };
-    if (p.title === "DYC-AI ChatBot") return { ...p, img: null };
+    if (p.title === "DYC-AI ChatBot") return { ...p, img: dycaiThumb };
     return p;
   })
 );

@@ -73,11 +73,11 @@ const emit = defineEmits(["update:active"]);
 const menuOpen = ref(false);
 
 const links = [
-  { id: "home",       label: "HOME"       },
-  { id: "about",      label: "ABOUT ME"   },
+  { id: "home",       label: "ABOUT"       },
   { id: "experience", label: "EXPERIENCE" },
   { id: "projects",   label: "PROJECTS"   },
-  { id: "skills",     label: "EXTRAS",    comingSoon: true },
+  { id: "skills",     label: "TECH STACK"},
+  { id: "extra",     label: "EXTRAS" },
 ];
 
 // ── Scroll-to helpers ──────────────────────────────────────────────────────

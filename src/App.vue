@@ -25,6 +25,9 @@
           <section id="skills" v-reveal="{ delay: 80 }">
             <SkillsSection />
           </section>
+          <section id="extra" v-reveal="{ delay: 100 }">
+            <Extras id="extra" />
+          </section>
         </div>
         <teleport to="body">
           <button class="scrollTopBtn" :class="{ hidden: !showScrollTop }" @click="scrollToTop" aria-label="Scroll to top" title="Back to top">
@@ -44,6 +47,7 @@ import HeroSection from "./components/HeroSection.vue";
 import AboutSection from "./components/AboutSection.vue";
 import ProjectsSection from "./components/ProjectsSection.vue";
 import SkillsSection from "./components/SkillsSection.vue";
+import Extras from "./components/Extras.vue";
 import TimelineSection from "./components/TimelineSection.vue";
 import pentoImg from "./assets/pento.png";
 import jankenImg from "./assets/janken.png";

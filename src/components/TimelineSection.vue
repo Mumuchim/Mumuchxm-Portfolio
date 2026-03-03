@@ -63,7 +63,7 @@ const events = [
     date: "Jul 2025 — Nov 2025 · 5 mos",
     title: "Marketing Associate",
     org: "Primcare Marketing Corporation · Plaridel, Central Luzon · On-site",
-    desc: "Absorbed from internship into a full-time role as Sequence Builder — responsible for creating, managing, and optimizing automated message sequences on Botcakes and Pancake platforms. Designed conditional logic workflows for personalized user engagement and monitored performance metrics to improve automation efficiency. Left in November to fully commit to software development.",
+    desc: "Absorbed from internship into a full-time role as Sequence Builder and is responsible for creating, managing, and optimizing automated message sequences on Botcakes and Pancake platforms. Designed conditional logic workflows for personalized user engagement and monitored performance metrics to improve automation efficiency. Left in November to fully commit to software development.",
     tags: ["Sequence Builder", "Marketing Automation", "Botcakes", "Pancake", "Canva", "LLMs"],
   },
   {
@@ -73,7 +73,7 @@ const events = [
     date: "Nov 2025 — Present",
     title: "Open to Work",
     org: "Philippines · Remote-friendly",
-    desc: "Pursuing software development full-time — building projects, sharpening skills, and looking for a junior dev role where I can contribute and grow.",
+    desc: "Pursuing software development full-time... and is building projects, sharpening skills, and looking for a junior dev role where I can contribute and grow.",
     tags: ["Vue", "React", "Python", "C++", "Open to Work"],
   },
 ];
