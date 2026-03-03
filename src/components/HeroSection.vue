@@ -57,7 +57,7 @@
               <span class="otwDot"></span>
               <span class="otwLabel">Open to Work · Available Now</span>
             </div>
-            <h1 class="heroTitle">JEROME ISAAC CERENEO</h1>
+            <h1 class="heroTitle" ref="titleRef" :style="titleStyle">JEROME ISAAC CERENEO</h1>
             <p class="heroLocation">based in Philippines.</p>
           </div>
 
@@ -148,7 +148,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 
 import githubIcon from "../assets/github.png";
 import linkedinIcon from "../assets/linkedin.png";
@@ -192,14 +192,54 @@ function onKeydown(e) {
   if (e.key === "Escape" && showContact.value) closeContact();
 }
 
-onMounted(() => window.addEventListener("keydown", onKeydown));
-onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
+const titleRef = ref(null);
+const localX = ref(0);
+const localY = ref(0);
+const lightOpacity = ref(0);
+
+function onGlobalMouseMove(e) {
+  if (!titleRef.value) return;
+  const rect = titleRef.value.getBoundingClientRect();
+
+  // Mouse position relative to the element
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  localX.value = x;
+  localY.value = y;
+
+  // Distance from cursor to nearest point on the element's bounding box
+  const cx = Math.max(0, Math.min(rect.width, x));
+  const cy = Math.max(0, Math.min(rect.height, y));
+  const dist = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
+
+  // Fade: full glow within 40px, gone at 200px
+  const maxDist = 200;
+  lightOpacity.value = dist > maxDist ? 0 : 1 - dist / maxDist;
+}
+
+const titleStyle = computed(() => {
+  const o = lightOpacity.value;
+  if (o <= 0) return {};
+  const x = localX.value;
+  const y = localY.value;
+  return {
+    backgroundImage: `radial-gradient(circle 180px at ${x}px ${y}px, rgba(224,196,255,${o}) 0%, rgba(183,140,255,${(o * 0.9).toFixed(2)}) 28%, rgba(183,140,255,${(o * 0.25).toFixed(2)}) 58%, rgba(255,255,255,0.88) 80%)`,
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  };
+});
+
+onMounted(() => { window.addEventListener("keydown", onKeydown); window.addEventListener("mousemove", onGlobalMouseMove); });
+onBeforeUnmount(() => { window.removeEventListener("keydown", onKeydown); window.removeEventListener("mousemove", onGlobalMouseMove); });
 </script>
 
 <style scoped>
 
 /* ===== PANEL ===== */
 .heroPanel{ position: relative; }
+
+.heroTitle { cursor: default; user-select: none; -webkit-user-select: none; }
 
 /* ===== OPEN TO WORK BADGE ===== */
 .otwBadge {
