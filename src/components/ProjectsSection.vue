@@ -60,6 +60,7 @@ import figmaIcon     from "../assets/stack/figma.png";
 import jsIcon      from "../assets/stack/javascript.png";
 import htmlIcon      from "../assets/stack/html.png";
 import cssIcon       from "../assets/stack/css.png";
+import sqlIcon       from "../assets/stack/sql.png";
 import reactjsIcon   from "../assets/stack/reactjs.png";
 import vueIcon       from "../assets/stack/vue.png";
 import viteIcon      from "../assets/stack/vite.png";
@@ -173,6 +174,7 @@ const projects = computed(() => [
       { name: "JavaScript",      icon: jsIcon      },
       { name: "Python", icon: pythonIcon },
       { name: "Flask",  icon: flaskIcon },
+      { name: "XAMPP",  icon: sqlIcon },
     ],
   },
 ]);

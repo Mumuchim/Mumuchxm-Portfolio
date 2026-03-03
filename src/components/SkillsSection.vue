@@ -86,7 +86,7 @@ const row1 = [
   { name: 'C++',         img: imgCpp },
   { name: 'C#',          img: imgCsharp },
   { name: 'Java',        img: imgJava },
-  { name: 'SQL',         img: imgSql },
+  { name: 'XAMPP',         img: imgSql },
   { name: 'Supabase',    img: imgSupabase },
   { name: 'GitHub',      img: imgGithub },
   { name: 'VS Code',     img: imgVscode },
