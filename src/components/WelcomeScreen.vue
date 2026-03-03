@@ -37,15 +37,14 @@
         <div class="welcome-notice">
           <p class="notice-heading">⚠ Intellectual Property Notice</p>
           <p class="notice-body">
-            All content displayed in this portfolio — including but not limited to projects,
+            All content displayed in this portfolio including but not limited to projects,
             source code, designs, written descriptions, certificates, artwork, and personal
-            branding — is the <strong>exclusive intellectual property</strong> of
-            <strong>Jerome Isaac Cereneo</strong>.
+            branding are <strong>exclusive intellectual property</strong> of <strong>Jerome Isaac Cereneo</strong>.
           </p>
           <p class="notice-body">
             Unauthorized reproduction, redistribution, or commercial use of any material
-            found herein is strictly prohibited without prior written consent from the owner.
-            All rights reserved © {{ currentYear }} Jerome Isaac Cereneo.
+            found herein is strictly prohibited without prior written consent from the owner. <br>
+            All rights reserved © {{ currentYear }} -  Mumuchxm.
           </p>
         </div>
 
