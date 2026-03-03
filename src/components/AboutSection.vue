@@ -304,7 +304,7 @@ function goNextTab() {
 /* ✅ Overview content (shorter) */
 const content = {
   overview: {
-    tags: ["Newbie", "Full Stack", "Open to Work"],
+    tags: ["Newbie", "Full Stack"],
   },
 };
 

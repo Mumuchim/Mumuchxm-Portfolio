@@ -362,7 +362,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   position: absolute;
   top: 9px;
   right: 9px;
-  z-index: 10;
+  z-index: 15;
 
   font-family: Montserrat, sans-serif;
   font-size: 10px;

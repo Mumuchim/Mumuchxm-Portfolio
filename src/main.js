@@ -17,7 +17,7 @@ app.directive("reveal", {
           obs.disconnect();
         }
       },
-      { threshold: 0.08 }
+      { threshold: 0.05 }
     );
     obs.observe(el);
   },

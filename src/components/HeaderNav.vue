@@ -80,21 +80,11 @@ const links = [
   { id: "skills",     label: "EXTRAS",    comingSoon: true },
 ];
 
+// ── Scroll-to helpers ──────────────────────────────────────────────────────
 function headerOffsetPx() {
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue("--header-h").trim();
   return (parseInt(raw || "0", 10) || 0) + 18;
-}
-
-function setActiveByScroll() {
-  const offset = headerOffsetPx();
-  let current = links[0].id;
-  for (const { id } of links) {
-    const el = document.getElementById(id);
-    if (!el) continue;
-    if (el.getBoundingClientRect().top - offset <= 0) current = id;
-  }
-  if (current !== props.active) emit("update:active", current);
 }
 
 function go(id) {
@@ -111,10 +101,53 @@ function goMobile(id) {
   setTimeout(() => go(id), 200);
 }
 
-let rafId = 0;
-function onScroll() {
-  cancelAnimationFrame(rafId);
-  rafId = requestAnimationFrame(setActiveByScroll);
+// ── Active-section detection via IntersectionObserver ─────────────────────
+// Strategy: observe each section with a rootMargin that creates a detection
+// strip just below the header (~top 45% of viewport). Track all currently
+// intersecting sections and always highlight the topmost one in page order.
+let sectionObserver = null;
+const visibleIds = new Set();
+
+function pickActive() {
+  for (const { id } of links) {
+    if (visibleIds.has(id)) {
+      if (id !== props.active) emit("update:active", id);
+      return;
+    }
+  }
+}
+
+function setupObserver() {
+  if (sectionObserver) sectionObserver.disconnect();
+
+  const headerH = parseInt(
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--header-h") || "84"
+  );
+
+  // Detection zone: from just below the header to 50% up from the bottom.
+  // A section fires when its top edge enters this 50%-ish strip.
+  sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleIds.add(entry.target.id);
+        } else {
+          visibleIds.delete(entry.target.id);
+        }
+      });
+      pickActive();
+    },
+    {
+      rootMargin: `-${headerH + 8}px 0px -45% 0px`,
+      threshold: 0,
+    }
+  );
+
+  links.forEach(({ id }) => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
 }
 
 function onKeydown(e) {
@@ -126,19 +159,15 @@ onMounted(() => {
     const id = location.hash.slice(1);
     if (links.some((l) => l.id === id)) emit("update:active", id);
   }
-  setActiveByScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  document.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
+  setupObserver();
+  window.addEventListener("resize", setupObserver);
   window.addEventListener("keydown", onKeydown);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("scroll", onScroll);
-  document.removeEventListener("scroll", onScroll);
-  window.removeEventListener("resize", onScroll);
+  if (sectionObserver) sectionObserver.disconnect();
+  window.removeEventListener("resize", setupObserver);
   window.removeEventListener("keydown", onKeydown);
-  cancelAnimationFrame(rafId);
 });
 </script>
 
