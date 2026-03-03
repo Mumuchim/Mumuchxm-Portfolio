@@ -21,6 +21,7 @@
       <!-- Status badge pinned to top-right of thumbnail -->
       <span v-if="status === 'finished'" class="statusBadge finished">✔ Finished</span>
       <span v-else-if="status === 'in-progress'" class="statusBadge inprogress">⚙ In Progress</span>
+      <span v-else-if="status === 'pending'" class="statusBadge pending">⏳ Pending Project</span>
     <!-- Local Only overlay -->
       <div v-if="localOnly" class="localOnlyOverlay">
         <span class="localOnlyIcon">💾</span>
@@ -58,7 +59,7 @@
           @click="showDetail = true"
           title="View project details"
         >
-          Details
+          {{ details && details.concept ? 'Concept' : 'Details' }}
         </button>
 
         <button
@@ -104,6 +105,7 @@
           <div class="detailMeta">
             <span v-if="status === 'finished'" class="statusBadge finished" style="position:static;backdrop-filter:none">✔ Finished</span>
             <span v-else-if="status === 'in-progress'" class="statusBadge inprogress" style="position:static;backdrop-filter:none">⚙ In Progress</span>
+            <span v-else-if="status === 'pending'" class="statusBadge pending" style="position:static;backdrop-filter:none">⏳ Pending Project</span>
           </div>
           <h2 class="detailTitle">{{ title }}</h2>
         </div>
@@ -113,18 +115,34 @@
         </div>
 
         <div class="detailBody">
-          <div v-if="details.problem" class="detailSection">
-            <div class="detailSectionLabel">🔍 Problem</div>
-            <p>{{ details.problem }}</p>
-          </div>
-          <div v-if="details.built" class="detailSection">
-            <div class="detailSectionLabel">🔨 What I Built</div>
-            <p>{{ details.built }}</p>
-          </div>
-          <div v-if="details.learned" class="detailSection">
-            <div class="detailSectionLabel">💡 What I Learned</div>
-            <p>{{ details.learned }}</p>
-          </div>
+          <template v-if="details.concept">
+            <div class="detailSection">
+              <div class="detailSectionLabel">🎯 Vision</div>
+              <p>{{ details.vision }}</p>
+            </div>
+            <div class="detailSection">
+              <div class="detailSectionLabel">🌌 Inspiration</div>
+              <p>{{ details.inspiration }}</p>
+            </div>
+            <div class="detailSection">
+              <div class="detailSectionLabel">🛣 Roadmap</div>
+              <p>{{ details.roadmap }}</p>
+            </div>
+          </template>
+          <template v-else>
+            <div v-if="details.problem" class="detailSection">
+              <div class="detailSectionLabel">🔍 Problem</div>
+              <p>{{ details.problem }}</p>
+            </div>
+            <div v-if="details.built" class="detailSection">
+              <div class="detailSectionLabel">🔨 What I Built</div>
+              <p>{{ details.built }}</p>
+            </div>
+            <div v-if="details.learned" class="detailSection">
+              <div class="detailSectionLabel">💡 What I Learned</div>
+              <p>{{ details.learned }}</p>
+            </div>
+          </template>
         </div>
 
         <div v-if="stack && stack.length" class="detailStack">
@@ -386,6 +404,13 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   background: rgba(80, 55, 10, 0.72);
   border: 1px solid rgba(255, 180, 50, 0.50);
   color: #ffd97d;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+.statusBadge.pending {
+  background: rgba(20, 40, 80, 0.72);
+  border: 1px solid rgba(100, 160, 255, 0.50);
+  color: #93c5fd;
   box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 

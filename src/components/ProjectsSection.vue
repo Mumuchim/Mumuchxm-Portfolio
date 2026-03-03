@@ -66,6 +66,12 @@ import vueIcon       from "../assets/stack/vue.png";
 import viteIcon      from "../assets/stack/vite.png";
 import supabaseIcon  from "../assets/stack/supabase.png";
 import vercelIcon    from "../assets/stack/vercel.png";
+import unityIcon     from "../assets/stack/unity.png";
+import csharpIcon    from "../assets/stack/csharp.png";
+import asepriteIcon  from "../assets/stack/aseprite.png";
+import webglIcon     from "../assets/stack/webgl.png";
+import itchIcon      from "../assets/stack/itch.png";
+import bunnychimGif  from "../assets/bunnychim.gif";
 import dycaiThumb   from "../assets/dyc-ai-thumbnail.png";
 
 // ── Filter options ──────────────────────────────────────────
@@ -75,6 +81,7 @@ const filters = [
   { tag: "vue",      label: "Vue",      icon: vueIcon },
   { tag: "python",   label: "Python",   icon: pythonIcon },
   { tag: "supabase", label: "Supabase", icon: supabaseIcon },
+  { tag: "unity",    label: "Unity",    icon: unityIcon },
 ];
 
 const activeFilter = ref("all");
@@ -175,6 +182,28 @@ const projects = computed(() => [
       { name: "Python", icon: pythonIcon },
       { name: "Flask",  icon: flaskIcon },
       { name: "XAMPP",  icon: sqlIcon },
+    ],
+  },
+  {
+    title:  "Project Bunnychim",
+    desc:   "A 2D platformer where a bunny journeys through the world using carrots and vegetables as arsenals. Inspired by Hollow Knight's atmosphere and Stardew Valley's farming elements.",
+    img:    bunnychimGif,
+    link:   null,
+    video:  null,
+    status: "pending",
+    tags:   ["unity"],
+    details: {
+      concept: true,
+      vision: "Project Bunnychim is a long-time college idea I originally sketched on bond paper — the GIF shown here was hand-drawn before I even knew proper pixel art tools existed. The goal is to turn that raw concept into a polished 2D indie game.",
+      inspiration: "Atmospheric exploration inspired by Hollow Knight combined with cozy farming elements like Stardew Valley. The bunny uses vegetables and carrots as weapons, blending combat with charm.",
+      roadmap: "After finishing PENTObattle, I plan to study Unity 2D deeply through Brackeys tutorials, rebuild the art properly using Aseprite, implement smooth combat and farming systems, and eventually publish a playable WebGL demo on itch.io.",
+    },
+    stack: [
+      { name: "Unity",    icon: unityIcon    },
+      { name: "C#",       icon: csharpIcon   },
+      { name: "Aseprite", icon: asepriteIcon  },
+      { name: "WebGL",    icon: webglIcon    },
+      { name: "Itch.io",  icon: itchIcon     },
     ],
   },
 ]);
