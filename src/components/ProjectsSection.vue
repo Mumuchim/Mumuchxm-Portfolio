@@ -71,7 +71,7 @@ import asepriteIcon  from "../assets/stack/aseprite.png";
 import webglIcon     from "../assets/stack/webgl.png";
 import itchIcon      from "../assets/stack/itch.png";
 import bunnychimGif  from "../assets/bunnychim.gif";
-import dycaiThumb   from "../assets/dychat-thumbnail.png";
+import dycaiThumb   from "../assets/dyc-ai-thumbnail.png";
 
 // ── Filter options ──────────────────────────────────────────
 const filters = [
