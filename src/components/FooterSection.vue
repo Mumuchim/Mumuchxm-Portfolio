@@ -124,9 +124,10 @@ function scrollTo(href) {
 }
 
 .footerFull {
-  font-family: Montserrat, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
+  font-family: Orbitron, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .8px;
   color: rgba(255,255,255,.55);
 }
 
@@ -245,8 +246,10 @@ function scrollTo(href) {
 .footerSocialBtn:hover img { opacity: 1; }
 
 .footerCopy {
-  font-family: Montserrat, sans-serif;
-  font-size: 11px;
+  font-family: Orbitron, sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .6px;
   color: rgba(255,255,255,.20);
 }
 
