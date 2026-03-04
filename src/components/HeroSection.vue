@@ -2,13 +2,18 @@
   <section :id="id" ref="heroSectionRef">
     <section class="heroRow">
       <!-- ===== LEFT: AVATAR ===== -->
-      <div class="portrait">
+      <div class="portrait" @click="flipped = !flipped" :class="{ flipped }" title="Click me!">
         <div class="portraitGlow"></div>
-
-        <div
-          class="portraitInner"
-          :style="{ backgroundImage: `url(${avatarImg})` }"
-        ></div>
+        <div class="portraitFlipInner">
+          <!-- Front: avatar -->
+          <div class="portraitFace portraitFront"
+               :style="{ backgroundImage: `url(${avatarImg})` }">
+          </div>
+          <!-- Back: logo -->
+          <div class="portraitFace portraitBack">
+            <img :src="logoImg" alt="Mumuchxm logo" class="portraitLogo" />
+          </div>
+        </div>
       </div>
 
       <!-- ===== RIGHT: PANEL ===== -->
@@ -155,6 +160,7 @@
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 
 import githubIcon from "../assets/github.png";
+const logoImg = "/logo.png"; // served from public/
 import linkedinIcon from "../assets/linkedin.png";
 import discordIcon from "../assets/discord.png";
 
@@ -167,6 +173,7 @@ defineProps({
 const email = "cereneo.jeromeisaac@gmail.com";
 const phone = "+63 906 025 3843";
 
+const flipped = ref(false);
 const showContact = ref(false);
 const copiedKey = ref(""); // "email" | "phone" | ""
 const copyTimer = ref(null);
@@ -276,6 +283,55 @@ onBeforeUnmount(() => { window.removeEventListener("keydown", onKeydown); window
 </script>
 
 <style scoped>
+
+/* ===== PORTRAIT FLIP ===== */
+.portrait {
+  perspective: 900px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.portraitFlipInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(.22,1,.36,1);
+  border-radius: 50%;
+}
+
+.portrait.flipped .portraitFlipInner {
+  transform: rotateY(180deg);
+}
+
+.portraitFace {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.portraitFront {
+  background-size: cover;
+  background-position: center;
+}
+
+.portraitBack {
+  background: rgba(18,18,28,.90);
+  border: 1px solid rgba(183,140,255,.30);
+  box-shadow: 0 0 28px rgba(183,140,255,.20);
+  transform: rotateY(180deg);
+  display: grid;
+  place-items: center;
+}
+
+.portraitLogo {
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(183,140,255,.55));
+}
 
 /* ===== PANEL ===== */
 .heroPanel{ position: relative; }

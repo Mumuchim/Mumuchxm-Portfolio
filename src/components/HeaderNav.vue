@@ -1,6 +1,6 @@
 <template>
   <header class="topbar">
-    <div class="brand">
+    <div class="brand" @click="scrollToTop" style="cursor:pointer" title="Back to top">
       <div class="brandTop">Jerome Isaac Cereneo</div>
       <div class="brandRow">
         <span class="brandAccent">Mumuchxm</span>
@@ -73,11 +73,11 @@ const emit = defineEmits(["update:active"]);
 const menuOpen = ref(false);
 
 const links = [
-  { id: "home",       label: "ABOUT"       },
-  { id: "experience", label: "EXPERIENCE" },
-  { id: "projects",   label: "PROJECTS"   },
-  { id: "skills",     label: "TECH STACK"},
-  { id: "extra",     label: "EXTRAS" },
+  { id: "about",      label: "ABOUT"       },
+  { id: "experience", label: "EXPERIENCE"  },
+  { id: "projects",   label: "PROJECTS"    },
+  { id: "skills",     label: "TECH STACK"  },
+  { id: "extra",      label: "EXTRAS"      },
 ];
 
 // ── Scroll-to helpers ──────────────────────────────────────────────────────
@@ -85,6 +85,10 @@ function headerOffsetPx() {
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue("--header-h").trim();
   return (parseInt(raw || "0", 10) || 0) + 18;
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function go(id) {

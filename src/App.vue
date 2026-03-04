@@ -29,6 +29,7 @@
           <section id="extra" v-reveal="{ delay: 100 }">
             <Extras />
           </section>
+          <FooterSection />
         </div>
         <teleport to="body">
           <button class="scrollTopBtn" :class="{ hidden: !showScrollTop }" @click="scrollToTop" aria-label="Scroll to top" title="Back to top">
@@ -52,6 +53,7 @@ import SkillsSection from "./components/SkillsSection.vue";
 import Extras from "./components/Extras.vue";
 import TimelineSection from "./components/TimelineSection.vue";
 import CursorTrail from "./components/CursorTrail.vue";
+import FooterSection from "./components/FooterSection.vue";
 import Starfield from "./components/Starfield.vue";
 import pentoImg from "./assets/pento.png";
 import jankenImg from "./assets/janken.png";
