@@ -49,7 +49,7 @@ body{
 .frame{
   width: min(1280px, calc(100vw - 40px));
   border-radius: 14px;
-  background: rgba(0,0,0,.40);
+  background: rgba(0,0,0,.15);
   border: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 28px 95px rgba(0,0,0,.55);
   position: relative;
@@ -393,7 +393,8 @@ section[id]{
 
 .scrollTopBtn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0,0,0,.50), 0 0 22px rgba(168,140,255,.32);
+  box-shadow: 0 12px 32px rgba(0,0,0,.50), 0 0 24px rgba(168,140,255,.45);
+  border-color: rgba(183,140,255,.55);
 }
 
 .scrollTopBtn:active {
@@ -626,4 +627,43 @@ section[id]{
 @media (max-width: 600px) {
   .hamburgerBtn { display: flex; }
   .mobileDrawer { display: flex; }
+}
+
+/* =========================
+   CARD SHINE SWEEP
+   ========================= */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255,255,255,.045) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card:hover::after {
+  opacity: 1;
+  animation: cardShine .6s ease forwards;
+}
+
+@keyframes cardShine {
+  from { background-position: 200% 0; }
+  to   { background-position: -40% 0; }
+}
+
+/* =========================
+   FILTER BAR ACTIVE GLOW
+   ========================= */
+.filterBtn.active {
+  box-shadow: 0 0 14px rgba(168,140,255,.30) !important;
 }

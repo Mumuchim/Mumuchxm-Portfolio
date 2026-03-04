@@ -1,16 +1,16 @@
 <template>
-  <section :id="id" class="tabSection">
+  <section :id="id" class="tabSection" ref="sectionRef">
     <div class="tabPlaceholder">
       <h2 class="tabTitle">EXPERIENCE</h2>
       <p class="tabDesc">Education, work, and where I am now.</p>
 
-      <div class="timeline">
+      <div class="timeline" :class="{ stacked: isStacked }">
         <div
           v-for="(item, i) in events"
           :key="i"
           class="timelineItem"
           :class="item.type"
-          v-reveal="{ delay: i * 80 }"
+          :style="cardStyle(i)"
         >
           <!-- Line + dot -->
           <div class="timelineStem">
@@ -41,9 +41,77 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+
 defineProps({
   id: { type: String, default: "experience" },
 });
+
+const sectionRef = ref(null);
+const progress = ref(0); // 0 = stacked, 1 = fully expanded
+
+// Where each card SITS when stacked — all piled near the top of the section,
+// slightly offset so user can see it's a deck
+const stackPos = [
+  { x:   6, y:   0, rot:  2.8, zIndex: 3 }, // top card
+  { x: -10, y:  14, rot: -3.5, zIndex: 2 }, // middle card peeking behind
+  { x:  16, y:  24, rot:  1.5, zIndex: 1 }, // bottom card peeking
+];
+
+// Where each card ends up when fully expanded (normal timeline flow)
+// marginBottom matches .timelineCard margin-bottom: 28px
+const expandedY = [0, 1, 2].map(i => i * 210); // approx per-card height
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+function cardStyle(i) {
+  const p = easeOut(progress.value);
+  const s = stackPos[i] || { x: 0, y: 0, rot: 0, zIndex: 0 };
+
+  const tx  = lerp(s.x, 0, p);
+  // stacked: all cards at y≈0 area; expanded: each card at its natural position
+  const ty  = lerp(s.y - expandedY[i], 0, p);
+  const rot = lerp(s.rot, 0, p);
+
+  return {
+    transform: `translateX(${tx}px) translateY(${ty}px) rotate(${rot}deg)`,
+    zIndex:    progress.value < 0.15 ? s.zIndex : "auto",
+    transition: progress.value < 0.05
+      ? "none"                                          // snap instantly on page load
+      : "transform 0.55s cubic-bezier(.22,1,.36,1)",
+    position: "relative",
+  };
+}
+
+const isStacked = computed(() => progress.value < 0.12);
+
+function getHeaderHeight() {
+  // Read the CSS variable --header-h set in styles.css
+  return parseFloat(
+    getComputedStyle(document.documentElement)
+      .getPropertyValue('--header-h')
+  ) || 84;
+}
+
+function onScroll() {
+  if (!sectionRef.value) return;
+  const rect       = sectionRef.value.getBoundingClientRect();
+  const headerH    = getHeaderHeight();
+
+  // Trigger point: when the section title top aligns with the bottom of the header
+  // rect.top <= headerH  →  header has reached the section title
+  // Fully expanded 200px after that point
+  const expandRange = 200;
+  const raw = (headerH - rect.top) / expandRange;
+  progress.value = Math.max(0, Math.min(1, raw));
+}
+
+onMounted(() => {
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+});
+onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
 
 const events = [
   {
@@ -85,6 +153,34 @@ const events = [
   display: flex;
   flex-direction: column;
   gap: 0;
+  /* allow rotated cards to show outside bounds */
+  overflow: visible;
+}
+
+/* when stacked, reduce the section min-height so it doesnt leave a gap */
+/* Reserve enough height for expanded state always so page doesn't jump */
+.timeline {
+  min-height: 650px;
+}
+
+/* hide stems when cards are overlapping */
+.timeline.stacked .timelineStem {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.timeline:not(.stacked) .timelineStem {
+  opacity: 1;
+  transition: opacity 0.5s ease 0.3s;
+}
+
+/* stacked cards should show a grab cursor hint */
+.timeline.stacked .timelineCard {
+  cursor: default;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .timelineItem {

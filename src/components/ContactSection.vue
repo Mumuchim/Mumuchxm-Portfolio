@@ -1,3 +1,4 @@
+<!-- NOTE: This component is currently unused. Contact info lives in HeroSection.vue modal. -->
 <template>
   <section :id="id" class="tabSection">
     <div class="tabPlaceholder">

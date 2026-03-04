@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Starfield />
     <WelcomeScreen v-if="!portfolioReady" @done="portfolioReady = true" />
     <Transition name="portfolio-reveal">
       <div v-if="portfolioReady" class="page">
@@ -26,7 +27,7 @@
             <SkillsSection />
           </section>
           <section id="extra" v-reveal="{ delay: 100 }">
-            <Extras id="extra" />
+            <Extras />
           </section>
         </div>
         <teleport to="body">
@@ -36,6 +37,7 @@
         </teleport>
       </div>
     </Transition>
+  <CursorTrail />
   </div>
 </template>
 
@@ -49,6 +51,8 @@ import ProjectsSection from "./components/ProjectsSection.vue";
 import SkillsSection from "./components/SkillsSection.vue";
 import Extras from "./components/Extras.vue";
 import TimelineSection from "./components/TimelineSection.vue";
+import CursorTrail from "./components/CursorTrail.vue";
+import Starfield from "./components/Starfield.vue";
 import pentoImg from "./assets/pento.png";
 import jankenImg from "./assets/janken.png";
 import quizlentineImg from "./assets/quizlentine.png";

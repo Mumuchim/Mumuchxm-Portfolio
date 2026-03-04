@@ -1,6 +1,6 @@
 <!-- src/components/ProjectCard.vue -->
 <template>
-  <article class="card" :class="{ localOnly }">
+  <article class="card" :class="{ localOnly }" ref="cardRef" @mousemove="onTilt" @mouseleave="resetTilt" :style="tiltStyle">
     <div class="thumb">
       <!-- Skeleton shimmer while loading -->
       <div v-if="img && !imgLoaded" class="thumbSkeleton"></div>
@@ -11,7 +11,7 @@
         :src="img"
         class="thumbImg"
         :class="{ loaded: imgLoaded }"
-        alt="project thumbnail"
+        :alt="`${title} screenshot`"
         @load="imgLoaded = true"
       />
 
@@ -229,6 +229,31 @@ const props = defineProps({
 const showModal = ref(false);
 const showDetail = ref(false);
 const imgLoaded = ref(false);
+const cardRef = ref(null);
+const tiltX = ref(0);
+const tiltY = ref(0);
+const tiltStyle = ref({});
+
+function onTilt(e) {
+  const el = cardRef.value;
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5 to 0.5
+  const y = (e.clientY - rect.top)  / rect.height - 0.5;
+  const rotY =  x * 12; // degrees
+  const rotX = -y * 9;
+  tiltStyle.value = {
+    transform: `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`,
+    transition: 'transform 0.08s ease',
+  };
+}
+
+function resetTilt() {
+  tiltStyle.value = {
+    transform: 'perspective(700px) rotateX(0deg) rotateY(0deg) scale(1)',
+    transition: 'transform 0.45s cubic-bezier(.22,1,.36,1)',
+  };
+}
 
 const videoIsYoutube = computed(() => {
   if (!props.video) return false;
@@ -304,12 +329,10 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   height: 100%;
   transform: translateY(0);
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, filter .25s ease;
-  will-change: transform;
 }
 
 .card:hover{
   z-index: 50;
-  transform: translateY(-2px);
   border-color: rgba(183,140,255,.30);
   box-shadow:
     0 10px 24px rgba(0,0,0,.35),

@@ -1,5 +1,5 @@
 <template>
-  <section :id="id">
+  <section :id="id" ref="heroSectionRef">
     <section class="heroRow">
       <!-- ===== LEFT: AVATAR ===== -->
       <div class="portrait">
@@ -68,17 +68,21 @@
           </h3>
 
           <div class="heroBtns">
-            <button class="hireBtn" type="button" @click="openContact">
-              CONTACT ME
-            </button>
-            <a
-              class="hireBtn resumeBtn"
-              href="/resume.pdf"
-              download="Jerome_Isaac_Cereneo_Resume.pdf"
-              title="Download Resume"
-            >
-              RESUME ↓
-            </a>
+            <div class="magWrap" ref="magBtn1" @mousemove="(e) => onMag(e, magBtn1)" @mouseleave="(e) => offMag(e, magBtn1)">
+              <button class="hireBtn" type="button" @click="openContact">
+                CONTACT ME
+              </button>
+            </div>
+            <div class="magWrap" ref="magBtn2" @mousemove="(e) => onMag(e, magBtn2)" @mouseleave="(e) => offMag(e, magBtn2)">
+              <a
+                class="hireBtn resumeBtn"
+                href="/resume.pdf"
+                download="Jerome_Isaac_Cereneo_Resume.pdf"
+                title="Download Resume"
+              >
+                RESUME ↓
+              </a>
+            </div>
           </div>
         </div>
 
@@ -165,6 +169,7 @@ const phone = "+63 906 025 3843";
 
 const showContact = ref(false);
 const copiedKey = ref(""); // "email" | "phone" | ""
+const copyTimer = ref(null);
 
 function openContact() {
   showContact.value = true;
@@ -173,7 +178,7 @@ function openContact() {
 function closeContact() {
   showContact.value = false;
   copiedKey.value = "";
-  window.clearTimeout(copy._t);
+  clearTimeout(copyTimer.value);
 }
 
 async function copy(text, key) {
@@ -184,14 +189,15 @@ async function copy(text, key) {
   }
 
   copiedKey.value = key;
-  window.clearTimeout(copy._t);
-  copy._t = window.setTimeout(() => (copiedKey.value = ""), 1400);
+  clearTimeout(copyTimer.value);
+  copyTimer.value = setTimeout(() => (copiedKey.value = ""), 1400);
 }
 
 function onKeydown(e) {
   if (e.key === "Escape" && showContact.value) closeContact();
 }
 
+const heroSectionRef = ref(null);
 const titleRef = ref(null);
 const localX = ref(0);
 const localY = ref(0);
@@ -199,36 +205,71 @@ const lightOpacity = ref(0);
 
 function onGlobalMouseMove(e) {
   if (!titleRef.value) return;
+
   const rect = titleRef.value.getBoundingClientRect();
 
-  // Mouse position relative to the element
+  // Cursor position relative to the h1 element — this is what the gradient uses
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
   localX.value = x;
   localY.value = y;
 
-  // Distance from cursor to nearest point on the element's bounding box
+  // Nearest point on the h1 bounding box to the cursor
   const cx = Math.max(0, Math.min(rect.width, x));
   const cy = Math.max(0, Math.min(rect.height, y));
   const dist = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
 
-  // Fade: full glow within 40px, gone at 200px
-  const maxDist = 200;
+  // Full glow when cursor is inside or within 20px; fades out by 160px
+  const maxDist = 160;
   lightOpacity.value = dist > maxDist ? 0 : 1 - dist / maxDist;
 }
 
 const titleStyle = computed(() => {
   const o = lightOpacity.value;
-  if (o <= 0) return {};
   const x = localX.value;
   const y = localY.value;
+  // Two-layer background-clip: purple radial on top, solid white fill behind.
+  // Letters outside the light always get the white layer — never go transparent.
   return {
-    backgroundImage: `radial-gradient(circle 180px at ${x}px ${y}px, rgba(224,196,255,${o}) 0%, rgba(183,140,255,${(o * 0.9).toFixed(2)}) 28%, rgba(183,140,255,${(o * 0.25).toFixed(2)}) 58%, rgba(255,255,255,0.88) 80%)`,
+    backgroundImage: [
+      `radial-gradient(circle 200px at ${x}px ${y}px,`,
+      `  rgba(255,255,255,${o.toFixed(2)}) 0%,`,
+      `  rgba(220,190,255,${(o*0.9).toFixed(2)}) 16%,`,
+      `  rgba(183,140,255,${(o*0.7).toFixed(2)}) 36%,`,
+      `  transparent 62%)`,
+      `, linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88))`
+    ].join(''),
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     backgroundClip: 'text',
   };
 });
+
+const magBtn1 = ref(null);
+const magBtn2 = ref(null);
+
+function onMag(e, elRef) {
+  const el = elRef?.value;
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const x = e.clientX - (rect.left + rect.width  / 2);
+  const y = e.clientY - (rect.top  + rect.height / 2);
+  const inner = el.querySelector('.hireBtn, a');
+  if (inner) {
+    inner.style.transform = `translate(${x * 0.38}px, ${y * 0.38}px)`;
+    inner.style.transition = 'transform 0.15s ease';
+  }
+}
+
+function offMag(e, elRef) {
+  const el = elRef?.value;
+  if (!el) return;
+  const inner = el.querySelector('.hireBtn, a');
+  if (inner) {
+    inner.style.transform = 'translate(0,0)';
+    inner.style.transition = 'transform 0.55s cubic-bezier(.22,1,.36,1)';
+  }
+}
 
 onMounted(() => { window.addEventListener("keydown", onKeydown); window.addEventListener("mousemove", onGlobalMouseMove); });
 onBeforeUnmount(() => { window.removeEventListener("keydown", onKeydown); window.removeEventListener("mousemove", onGlobalMouseMove); });
@@ -279,6 +320,11 @@ onBeforeUnmount(() => { window.removeEventListener("keydown", onKeydown); window
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.magWrap {
+  position: relative;
+  display: inline-flex;
 }
 
 .resumeBtn {
