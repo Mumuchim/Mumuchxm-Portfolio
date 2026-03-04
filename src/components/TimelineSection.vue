@@ -14,14 +14,27 @@
         >
           <!-- Line + dot -->
           <div class="timelineStem">
-            <div class="timelineDot">
-              <span class="dotIcon">{{ item.icon }}</span>
+            <div class="timelineDot" :class="item.type">
+              <!-- Education: graduation cap -->
+              <svg v-if="item.type === 'education'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/>
+              </svg>
+              <!-- Work: briefcase -->
+              <svg v-else-if="item.type === 'work'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2"/>
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                <line x1="12" y1="12" x2="12" y2="12"/>
+                <path d="M2 12h20"/>
+              </svg>
+              <!-- Now: pulse dot -->
+              <span v-else class="nowDot"></span>
             </div>
             <div v-if="i < events.length - 1" class="timelineLine"></div>
           </div>
 
           <!-- Card -->
-          <div class="timelineCard">
+          <div class="timelineCard" @mouseenter="playCardHover">
             <div class="timelineCardTop">
               <div class="timelineDate">{{ item.date }}</div>
               <div class="timelineTypeBadge" :class="item.type">{{ item.label }}</div>
@@ -42,6 +55,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
+import { playCardDeal, playCardHover } from "../composables/useSfx.js";
 
 defineProps({
   id: { type: String, default: "experience" },
@@ -85,9 +99,9 @@ function cardStyle(i) {
 }
 
 const isStacked = computed(() => progress.value < 0.12);
+const _dealtCards = ref(new Set());
 
 function getHeaderHeight() {
-  // Read the CSS variable --header-h set in styles.css
   return parseFloat(
     getComputedStyle(document.documentElement)
       .getPropertyValue('--header-h')
@@ -99,12 +113,24 @@ function onScroll() {
   const rect       = sectionRef.value.getBoundingClientRect();
   const headerH    = getHeaderHeight();
 
-  // Trigger point: when the section title top aligns with the bottom of the header
-  // rect.top <= headerH  →  header has reached the section title
-  // Fully expanded 200px after that point
   const expandRange = 200;
   const raw = (headerH - rect.top) / expandRange;
-  progress.value = Math.max(0, Math.min(1, raw));
+  const newProgress = Math.max(0, Math.min(1, raw));
+
+  // Trigger card deal SFX once per card as it crosses thresholds
+  if (newProgress > 0.05 && !_dealtCards.value.has(0)) {
+    _dealtCards.value.add(0); playCardDeal(0);
+  }
+  if (newProgress > 0.45 && !_dealtCards.value.has(1)) {
+    _dealtCards.value.add(1); playCardDeal(1);
+  }
+  if (newProgress > 0.80 && !_dealtCards.value.has(2)) {
+    _dealtCards.value.add(2); playCardDeal(2);
+  }
+  // Reset when scrolled back up so it can replay
+  if (newProgress <= 0) _dealtCards.value.clear();
+
+  progress.value = newProgress;
 }
 
 onMounted(() => {
@@ -209,19 +235,53 @@ const events = [
     0 8px 24px rgba(0,0,0,.35);
   display: grid;
   place-items: center;
-  font-size: 18px;
   flex-shrink: 0;
   position: relative;
   z-index: 1;
   transition: box-shadow .25s ease, border-color .25s ease;
+  color: rgba(183,140,255,.85);
 }
 
-.timelineItem.now .timelineDot {
+.timelineDot.education {
+  border-color: rgba(183,140,255,.30);
+  box-shadow:
+    0 0 0 4px rgba(183,140,255,.08),
+    0 0 16px rgba(183,140,255,.15),
+    0 8px 24px rgba(0,0,0,.35);
+  color: #b78cff;
+}
+
+.timelineDot.work {
+  border-color: rgba(255,180,50,.30);
+  box-shadow:
+    0 0 0 4px rgba(255,180,50,.08),
+    0 0 16px rgba(255,180,50,.12),
+    0 8px 24px rgba(0,0,0,.35);
+  color: #ffd97d;
+}
+
+.timelineDot.now {
   border-color: rgba(60, 200, 120, .40);
   box-shadow:
     0 0 0 5px rgba(60, 200, 120, .08),
     0 0 18px rgba(60, 200, 120, .20),
     0 8px 24px rgba(0,0,0,.35);
+}
+
+.nowDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 0 rgba(74,222,128,.5);
+  animation: nowPulse 2s ease-in-out infinite;
+  display: block;
+}
+
+@keyframes nowPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(74,222,128,.55); }
+  60%  { box-shadow: 0 0 0 8px rgba(74,222,128,.0); }
+  100% { box-shadow: 0 0 0 0 rgba(74,222,128,.0); }
 }
 
 .timelineLine {

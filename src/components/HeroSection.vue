@@ -2,7 +2,7 @@
   <section :id="id" ref="heroSectionRef">
     <section class="heroRow">
       <!-- ===== LEFT: AVATAR ===== -->
-      <div class="portrait" @click="flipped = !flipped" :class="{ flipped }" title="Click me!">
+      <div class="portrait" @click="flipped = !flipped; playFlip()" :class="{ flipped }" title="Click me!">
         <div class="portraitGlow"></div>
         <div class="portraitFlipInner">
           <!-- Front: avatar -->
@@ -158,6 +158,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { playFlip } from "../composables/useSfx.js";
 
 import githubIcon from "../assets/github.png";
 const logoImg = "/logo.png"; // served from public/

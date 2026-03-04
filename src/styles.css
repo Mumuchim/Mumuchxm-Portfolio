@@ -368,7 +368,7 @@ section[id]{
 .scrollTopBtn {
   position: fixed;
   bottom: 32px;
-  right: 32px;
+  right: 24px;
   z-index: 500;
 
   width: 46px;

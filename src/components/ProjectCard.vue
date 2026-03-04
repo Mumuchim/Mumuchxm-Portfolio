@@ -56,7 +56,7 @@
         <button
           v-if="details"
           class="actionBtn detailsBtn"
-          @click="showDetail = true"
+          @click="openDetails()"
           title="View project details"
         >
           {{ details && details.concept ? 'Concept' : 'Details' }}
@@ -96,10 +96,10 @@
       role="dialog"
       aria-modal="true"
       aria-label="Project details"
-      @click.self="showDetail = false"
+      @click.self="closeDetails()"
     >
       <div class="modal detailModal">
-        <button class="closeBtn" type="button" @click="showDetail = false" aria-label="Close">✕</button>
+        <button class="closeBtn" type="button" @click="closeDetails()" aria-label="Close">✕</button>
 
         <div class="detailHeader">
           <div class="detailMeta">
@@ -198,6 +198,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { playHover, playClick, playModalOpen, playModalClose } from "../composables/useSfx.js";
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -234,21 +235,28 @@ const tiltX = ref(0);
 const tiltY = ref(0);
 const tiltStyle = ref({});
 
+const _hovered = ref(false);
+
 function onTilt(e) {
   const el = cardRef.value;
   if (!el) return;
   const rect = el.getBoundingClientRect();
-  const x = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5 to 0.5
+  const x = (e.clientX - rect.left) / rect.width  - 0.5;
   const y = (e.clientY - rect.top)  / rect.height - 0.5;
-  const rotY =  x * 12; // degrees
+  const rotY =  x * 12;
   const rotX = -y * 9;
   tiltStyle.value = {
     transform: `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`,
     transition: 'transform 0.08s ease',
   };
+  if (!_hovered.value) {
+    _hovered.value = true;
+    playHover();
+  }
 }
 
 function resetTilt() {
+  _hovered.value = false;
   tiltStyle.value = {
     transform: 'perspective(700px) rotateX(0deg) rotateY(0deg) scale(1)',
     transition: 'transform 0.45s cubic-bezier(.22,1,.36,1)',
@@ -278,29 +286,41 @@ const youtubeEmbedUrl = computed(() => {
 
 function openLink() {
   if (props.coming || !props.link) return;
+  playClick();
   window.open(props.link, "_blank", "noopener,noreferrer");
 }
 
 function openDemo() {
   if (props.coming || !props.video) return;
+  playClick();
 
-  // YouTube → modal for better UX
   if (videoIsYoutube.value) {
     showModal.value = true;
+    playModalOpen();
     return;
   }
 
-  // otherwise, just open in a new tab
   window.open(props.video, "_blank", "noopener,noreferrer");
 }
 
 function closeModal() {
+  playModalClose();
   showModal.value = false;
+}
+
+function openDetails() {
+  playModalOpen();
+  showDetail.value = true;
+}
+
+function closeDetails() {
+  playModalClose();
+  showDetail.value = false;
 }
 
 function onKeydown(e) {
   if (e.key === "Escape") {
-    if (showDetail.value) { showDetail.value = false; return; }
+    if (showDetail.value) { closeDetails(); return; }
     if (showModal.value) closeModal();
   }
 }

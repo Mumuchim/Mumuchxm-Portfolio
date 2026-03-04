@@ -64,7 +64,13 @@
             @keydown.space.prevent="openPreview(c)"
           >
             <div class="certThumb" v-if="c.img">
-              <img :src="c.img" :alt="`${c.title} certificate`" />
+              <div class="certThumbSkeleton" :class="{ hidden: loadedImgs.has(c.img) }"></div>
+              <img
+                :src="c.img"
+                :alt="`${c.title} certificate`"
+                :class="{ loaded: loadedImgs.has(c.img) }"
+                @load="onImgLoad(c.img)"
+              />
               <div class="certThumbFade"></div>
             </div>
 
@@ -123,7 +129,14 @@
           </div>
 
           <div class="certModalImgWrap" v-if="preview.img">
-            <img class="certModalImg" :src="preview.img" :alt="preview.title" />
+            <div class="certModalSkeleton" :class="{ hidden: loadedImgs.has(preview.img) }"></div>
+            <img
+              class="certModalImg"
+              :src="preview.img"
+              :alt="preview.title"
+              :class="{ loaded: loadedImgs.has(preview.img) }"
+              @load="onImgLoad(preview.img)"
+            />
           </div>
 
           <div class="certModalActions">
@@ -179,6 +192,7 @@ import uipathIcon from "../assets/stack/uipath.png";
 import macroIcon from "../assets/stack/macro.png";
 import capcutIcon from "../assets/stack/capcut.png";
 import canvaIcon from "../assets/stack/canva.png";
+import audacityIcon from "../assets/stack/audacity.png";
 import vscodeIcon from "../assets/stack/vscode.png";
 import chatgptIcon from "../assets/stack/chatgpt.png";
 import claudeIcon from "../assets/stack/claude.png";
@@ -469,6 +483,7 @@ const additionalTools = [
   { name: "UiPath", icon: uipathIcon },
   { name: "Macro Recorder", icon: macroIcon },
   { name: "CapCut", icon: capcutIcon },
+  { name: "Audacity", icon: audacityIcon },
   { name: "Canva", icon: canvaIcon },
   { name: "VS Code", icon: vscodeIcon },
   { name: "ChatGPT", icon: chatgptIcon },
@@ -477,7 +492,12 @@ const additionalTools = [
 ];
 
 /* ===== preview modal state ===== */
-const preview = ref(null);
+const preview   = ref(null);
+const loadedImgs = ref(new Set());
+
+function onImgLoad(src) {
+  loadedImgs.value = new Set([...loadedImgs.value, src]);
+}
 
 function openPreview(c) {
   preview.value = c;
@@ -825,6 +845,37 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   object-fit: contain;
   display: block;
   background: rgba(255,255,255,.06);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.certThumb img.loaded{
+  opacity: 1;
+}
+
+.certThumbSkeleton{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.04) 0%,
+    rgba(255,255,255,.10) 40%,
+    rgba(255,255,255,.04) 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: inherit;
+  transition: opacity .3s ease;
+}
+
+.certThumbSkeleton.hidden{
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .certThumbFade{
@@ -1121,12 +1172,39 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   overflow: auto;
   flex: 1;
   min-height: 240px;
+  position: relative;
+}
+
+.certModalSkeleton{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.04) 0%,
+    rgba(255,255,255,.10) 40%,
+    rgba(255,255,255,.04) 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: inherit;
+  transition: opacity .3s ease;
+}
+
+.certModalSkeleton.hidden{
+  opacity: 0;
+  pointer-events: none;
 }
 
 .certModalImg{
   width: 100%;
   height: auto;
   display: block;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.certModalImg.loaded{
+  opacity: 1;
 }
 
 .certModalActions{

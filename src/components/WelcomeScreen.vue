@@ -64,6 +64,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import logoImg from '../assets/mumuchxm_logo.png';
+import { playEnter } from '../composables/useSfx.js';
 
 const emit = defineEmits(['done']);
 
@@ -84,6 +85,7 @@ function typeGreeting() {
 }
 
 function handleEnter() {
+  playEnter();
   visible.value = false;
   setTimeout(() => emit('done'), 700);
 }
