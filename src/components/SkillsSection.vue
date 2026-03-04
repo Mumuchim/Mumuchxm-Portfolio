@@ -60,6 +60,7 @@ import imgVscode      from '../assets/stack/vscode.png';
 import imgFigma       from '../assets/stack/figma.png';
 import imgCanva       from '../assets/stack/canva.png';
 import imgCapcut      from '../assets/stack/capcut.png';
+import imgAudacity    from '../assets/stack/audacity.png';
 import imgUnity       from '../assets/stack/unity.png';
 import imgWebgl       from '../assets/stack/webgl.png';
 import imgAseprite    from '../assets/stack/aseprite.png';
@@ -96,6 +97,7 @@ const row2 = [
   { name: 'Figma',       img: imgFigma },
   { name: 'Canva',       img: imgCanva },
   { name: 'CapCut',      img: imgCapcut },
+  { name: 'Audacity',    img: imgAudacity },
   { name: 'Unity',       img: imgUnity },
   { name: 'WebGL',       img: imgWebgl },
   { name: 'Aseprite',    img: imgAseprite },
