@@ -102,8 +102,14 @@ function toggleSfx() {
 
 function toggleBgm() {
   bgmOn.value = !bgmOn.value;
-  setBgmEnabled(bgmOn.value);
-  if (bgmOn.value) startBgm(bgmUrl);
+  if (bgmOn.value) {
+    // Wait for any fade-out to fully finish before starting again
+    stopBgm(true);
+    setBgmEnabled(true);
+    setTimeout(() => startBgm(bgmUrl), 50);
+  } else {
+    setBgmEnabled(false); // calls stopBgm internally
+  }
 }
 
 function onPortfolioReady() {
