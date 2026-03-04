@@ -54,6 +54,7 @@ import { ref, computed } from "vue";
 import ProjectCard from "./ProjectCard.vue";
 
 import pythonIcon    from "../assets/stack/python.png";
+import railwayIcon    from "../assets/stack/railway.png";
 import flaskIcon    from "../assets/stack/flask.png";
 import canvaIcon     from "../assets/stack/canva.png";
 import figmaIcon     from "../assets/stack/figma.png";
@@ -143,7 +144,7 @@ const projects = computed(() => [
       built: 'A Discord bot that hosts rock-paper-scissors matches. Players join a lobby, the bot manages turns, tracks wins, and announces results in the channel.',
       learned: 'Discord bot architecture with discord.py, managing async event loops, and how to design bot interactions that feel natural in a chat context.',
     },
-    stack: [{ name: "Python", icon: pythonIcon }],
+    stack: [{ name: "Python", icon: pythonIcon }, { name: "Railway", icon: railwayIcon } ],
   },
   {
     title:  "project: QUIZLENTINE",
