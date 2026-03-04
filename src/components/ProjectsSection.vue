@@ -71,7 +71,7 @@ import asepriteIcon  from "../assets/stack/aseprite.png";
 import webglIcon     from "../assets/stack/webgl.png";
 import itchIcon      from "../assets/stack/itch.png";
 import bunnychimGif  from "../assets/bunnychim.gif";
-import dycaiThumb   from "../assets/dyc-ai-thumbnail.png";
+import dycaiThumb   from "../assets/dychat-thumbnail.png";
 
 // ── Filter options ──────────────────────────────────────────
 const filters = [
@@ -162,11 +162,11 @@ const projects = computed(() => [
     ],
   },
   {
-    title:  "DYC-AI ChatBot",
+    title:  "DYChat",
     desc:   "A school chatbot for Dr. Yanga's Colleges built with a YouTube-guided PyTorch/NLTK base ... our contribution was the full frontend, the entire knowledge base, and training the bot on real school data.",
     img:    null,
     link:   null,
-    video:  null,
+    video:  "https://youtu.be/jWPkINrCJlo",
     status: "finished",
     tags:   ["python", "flask"],
     details: {
@@ -222,7 +222,7 @@ const projectsWithImages = computed(() =>
     if (p.title === "PENTObattle")         return { ...p, img: props.pentoImg };
     if (p.title === "Janken Pom")          return { ...p, img: props.jankenImg };
     if (p.title === "project: QUIZLENTINE") return { ...p, img: props.quizlentineImg };
-    if (p.title === "DYC-AI ChatBot") return { ...p, img: dycaiThumb };
+    if (p.title === "DYChat") return { ...p, img: dycaiThumb };
     return p;
   })
 );
