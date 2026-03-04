@@ -198,7 +198,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { playHover, playClick, playModalOpen, playModalClose } from "../composables/useSfx.js";
+import { playCardHover, playClick, playModalOpen, playModalClose } from "../composables/useSfx.js";
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -251,7 +251,7 @@ function onTilt(e) {
   };
   if (!_hovered.value) {
     _hovered.value = true;
-    playHover();
+    playCardHover();
   }
 }
 
