@@ -72,6 +72,7 @@ import webglIcon     from "../assets/stack/webgl.png";
 import itchIcon      from "../assets/stack/itch.png";
 import bunnychimGif  from "../assets/bunnychim.gif";
 import dycaiThumb   from "../assets/dyc-ai-thumbnail.png";
+import groqIcon     from "../assets/stack/groq.png";
 
 // ── Filter options ──────────────────────────────────────────
 const filters = [
@@ -128,6 +129,7 @@ const projects = computed(() => [
       { name: "Figma",    icon: figmaIcon    },
       { name: "Supabase", icon: supabaseIcon },
       { name: "Vercel",   icon: vercelIcon   },
+      { name: "Groq",     icon: groqIcon   },
     ],
   },
   {

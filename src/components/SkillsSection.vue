@@ -71,6 +71,7 @@ import imgVercel      from '../assets/stack/vercel.png';
 import imgItch        from '../assets/stack/itch.png';
 import imgClaude      from '../assets/stack/claude.png';
 import imgChatgpt     from '../assets/stack/chatgpt.png';
+import imgGroq     from '../assets/stack/groq.png';
 import imgDiscord     from '../assets/stack/discord.png';
 
 defineProps({ id: { type: String, default: 'skills' } });
@@ -108,6 +109,7 @@ const row2 = [
   { name: 'Itch.io',     img: imgItch },
   { name: 'Claude AI',   img: imgClaude },
   { name: 'ChatGPT',     img: imgChatgpt },
+  { name: 'Groq',     img: imgGroq },
   { name: 'Discord',     img: imgDiscord },
 ];
 </script>
