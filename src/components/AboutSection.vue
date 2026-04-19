@@ -198,6 +198,7 @@ import chatgptIcon from "../assets/stack/chatgpt.png";
 import claudeIcon from "../assets/stack/claude.png";
 
 /* ✅ Certification images (put them in src/assets/certs/) */
+import concentrixCertImg from "../assets/certs/concentrix_cert.png";
 import diplomaImg from "../assets/certs/diploma.png";
 import mosCertImg from "../assets/certs/mos_cert.png";
 import oracleCertImg from "../assets/certs/oracle_cert.png";
@@ -387,6 +388,14 @@ onMounted(() => {
 
 /* ===== Certs + stack ===== */
 const certs = [
+  {
+    type: "Training Completion",
+    title: "PH New Hire Onboarding for Frontline Gamechangers",
+    org: "Concentrix University",
+    date: "Apr 2026",
+    desc: "Completed onboarding training as part of joining Concentrix as a Frontline Gamechanger.",
+    img: concentrixCertImg,
+  },
   {
     type: "Degree",
     title: "Bachelor of Science in Computer Science",

@@ -57,10 +57,10 @@
         <!-- ===== HERO TEXT ===== -->
         <div class="heroPanelInner">
           <div class="heroHeading">
-            <!-- Open to Work badge -->
+            <!-- Employment badge -->
             <div class="otwBadge">
               <span class="otwDot"></span>
-              <span class="otwLabel">Open to Work · Available Now</span>
+              <span class="otwLabel">Fulltime · Concentrix</span>
             </div>
             <h1 class="heroTitle" ref="titleRef" :style="titleStyle">JEROME ISAAC CERENEO</h1>
             <p class="heroLocation">based in Philippines.</p>

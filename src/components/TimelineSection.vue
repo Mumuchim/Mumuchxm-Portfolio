@@ -164,11 +164,10 @@ const events = [
     type: "now",
     label: "Now",
     icon: "🟢",
-    date: "Nov 2025 — Present",
-    title: "Open to Work",
-    org: "Philippines · Remote-friendly",
-    desc: "Pursuing software development full-time... and is building projects, sharpening skills, and looking for a junior dev role where I can contribute and grow.",
-    tags: ["Vue", "React", "Python", "C++", "Open to Work"],
+    date: "Apr 2026 — Present",
+    title: "Customer Service Advisor I",
+    org: "Concentrix · Philippines",
+    desc: "Providing non-voice customer support for an e-commerce platform. Working fulltime while continuing to grow as a developer on the side.",
   },
 ];
 </script>

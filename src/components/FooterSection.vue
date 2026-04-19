@@ -12,7 +12,7 @@
         <span class="footerTagline">Web & Game Developer · Philippines</span>
         <div class="footerAvail">
           <span class="footerAvailDot"></span>
-          Open to Work
+          Fulltime
         </div>
       </div>
 
