@@ -79,14 +79,14 @@
               </button>
             </div>
             <div class="magWrap" ref="magBtn2" @mousemove="(e) => onMag(e, magBtn2)" @mouseleave="(e) => offMag(e, magBtn2)">
-              <a
+              <button
                 class="hireBtn resumeBtn"
-                href="/resume.pdf"
-                download="Jerome_Isaac_Cereneo_Resume.pdf"
+                type="button"
                 title="Download Resume"
+                @click="openResumeGate"
               >
                 RESUME ↓
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -153,11 +153,62 @@
       </div>
     </teleport>
 
+    <!-- ===== RESUME GATE MODAL ===== -->
+    <teleport to="body">
+      <div
+        v-if="resumeStage"
+        class="contactOverlay"
+        @click.self="closeResumeGate"
+      >
+        <div class="contactCard resumeGateCard">
+
+          <!-- Step 1: heads-up notice -->
+          <template v-if="resumeStage === 'notice'">
+            <div class="contactHeader">
+              <h3 class="contactTitle">HEADS UP</h3>
+              <p class="contactSub">I'm currently hired full-time. Still want to download my resume?</p>
+            </div>
+            <div class="contactActions resumeGateActions">
+              <button class="contactBtn okWide" @click="closeResumeGate">CANCEL</button>
+              <button class="contactBtn primary okWide" @click="resumeStage = 'password'">PROCEED</button>
+            </div>
+          </template>
+
+          <!-- Step 2: passcode -->
+          <template v-else-if="resumeStage === 'password'">
+            <div class="contactHeader">
+              <h3 class="contactTitle">ENTER CODE</h3>
+              <p class="contactSub">This resume is passcode-protected.</p>
+            </div>
+            <input
+              ref="resumeCodeInput"
+              type="password"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="4"
+              class="resumeCodeInput"
+              :class="{ shake: resumeError }"
+              v-model="resumeCode"
+              placeholder="••••"
+              @keyup.enter="submitResumeCode"
+              @animationend="resumeError = false"
+            />
+            <p v-if="resumeError" class="resumeErrorMsg">Incorrect code. Try again.</p>
+            <div class="contactActions resumeGateActions">
+              <button class="contactBtn okWide" @click="closeResumeGate">CANCEL</button>
+              <button class="contactBtn primary okWide" @click="submitResumeCode">UNLOCK</button>
+            </div>
+          </template>
+
+        </div>
+      </div>
+    </teleport>
+
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from "vue";
 import { playFlip } from "../composables/useSfx.js";
 
 import githubIcon from "../assets/github.png";
@@ -203,7 +254,48 @@ async function copy(text, key) {
 
 function onKeydown(e) {
   if (e.key === "Escape" && showContact.value) closeContact();
+  if (e.key === "Escape" && resumeStage.value) closeResumeGate();
 }
+
+// ===== RESUME GATE =====
+const RESUME_PASSCODE = "3166";
+const resumeStage = ref(null); // null | 'notice' | 'password'
+const resumeCode = ref("");
+const resumeError = ref(false);
+const resumeCodeInput = ref(null);
+
+function openResumeGate() {
+  resumeStage.value = "notice";
+  resumeCode.value = "";
+  resumeError.value = false;
+}
+
+function closeResumeGate() {
+  resumeStage.value = null;
+  resumeCode.value = "";
+  resumeError.value = false;
+}
+
+function submitResumeCode() {
+  if (resumeCode.value === RESUME_PASSCODE) {
+    const link = document.createElement("a");
+    link.href = "/resume.pdf";
+    link.download = "Jerome_Isaac_Cereneo_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    closeResumeGate();
+  } else {
+    resumeError.value = true;
+    resumeCode.value = "";
+  }
+}
+
+watch(resumeStage, (stage) => {
+  if (stage === "password") {
+    nextTick(() => resumeCodeInput.value?.focus());
+  }
+});
 
 const heroSectionRef = ref(null);
 const titleRef = ref(null);
@@ -582,6 +674,58 @@ onBeforeUnmount(() => { window.removeEventListener("keydown", onKeydown); window
   height: 44px;
   border-radius: 16px;
   font-size: 14px;
+}
+
+/* ===== RESUME GATE ===== */
+.resumeGateCard {
+  width: min(420px, 92vw);
+}
+
+.resumeGateActions {
+  gap: 10px;
+}
+
+.resumeCodeInput {
+  display: block;
+  width: min(220px, 80%);
+  margin: 18px auto 0;
+  height: 54px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 12px;
+  color: rgba(255,255,255,.95);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 14px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.resumeCodeInput:focus {
+  border-color: rgba(168,140,255,.5);
+  box-shadow: 0 0 0 3px rgba(168,140,255,.18);
+}
+
+.resumeCodeInput.shake {
+  animation: resumeShake .35s ease;
+  border-color: rgba(255,90,90,.55);
+}
+
+@keyframes resumeShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+.resumeErrorMsg {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff8a8a;
 }
 
 </style>
