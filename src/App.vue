@@ -87,7 +87,7 @@ import pentoImg from "./assets/pento.png";
 import jankenImg from "./assets/janken.png";
 import quizlentineImg from "./assets/quizlentine.png";
 import fixfinderImg from "./assets/fixfinder.png";
-import avatarImg from "./assets/avatar.jpg";
+import avatarImg from "./assets/avatar.png";
 import { setSfxEnabled, isSfxEnabled, startBgm, stopBgm, setBgmEnabled, isBgmEnabled, playClick, playHover } from "./composables/useSfx.js";
 import bgmUrl from "./assets/bgm.mp3";
 
