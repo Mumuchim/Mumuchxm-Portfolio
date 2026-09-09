@@ -3,7 +3,7 @@
     <div class="tabPlaceholder">
       <h2 class="tabTitle">PROJECTS</h2>
       <p class="tabDesc">
-        These aren't all of my coding experiences, but they're the ones I can only deploy for now.
+        Aren't all of my coding experiences, but they're the ones I can only deploy for now.
       </p>
 
       <!-- Tech Filter Bar -->
