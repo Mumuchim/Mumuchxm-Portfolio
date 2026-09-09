@@ -60,12 +60,12 @@
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { playCardDeal, playCardHover } from "../composables/useSfx.js";
 
-// Drop your logo files into src/assets/logos/ using these exact filenames
+// Drop your logo files into src/assets/ using these exact filenames
 // (see chat for recommended sizes). Missing files will break the build —
 // keep the placeholders until you're ready to swap them.
-import dycLogo        from "../assets/logos/dyc-logo.png";
-import primcareLogo   from "../assets/logos/primcare-logo.png";
-import concentrixLogo from "../assets/logos/concentrix-logo.png";
+import dyciLogo    from "../assets/dyci-logo.png";
+import primcareLogo from "../assets/primcare-logo.png";
+import tiktokLogo   from "../assets/tiktok-logo.png";
 
 defineProps({
   id: { type: String, default: "experience" },
@@ -154,7 +154,7 @@ const events = [
     type: "education",
     label: "Education",
     icon: "🎓",
-    logo: dycLogo,
+    logo: dyciLogo,
     date: "2021 — 2025",
     title: "BS Computer Science",
     org: "Dr. Yanga's Colleges, Inc.",
@@ -176,7 +176,7 @@ const events = [
     type: "now",
     label: "Now",
     icon: "🟢",
-    logo: concentrixLogo,
+    logo: tiktokLogo,
     date: "Apr 2026 — Present",
     title: "FBT Representative",
     org: "Concentrix | Bytedance · Philippines",
@@ -421,7 +421,6 @@ const events = [
 .timelineTypeBadge.now {
   background: #000000;
   border: 1px solid rgba(37,244,238,.55);
-  box-shadow: inset 0 0 0 1px rgba(254,44,85,.35);
   color: #ffffff;
 }
 
