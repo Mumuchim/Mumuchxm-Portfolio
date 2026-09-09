@@ -165,9 +165,9 @@ const events = [
     label: "Now",
     icon: "🟢",
     date: "Apr 2026 — Present",
-    title: "Customer Service Advisor I",
-    org: "Concentrix · Philippines",
-    desc: "Providing non-voice customer support for an e-commerce platform. Working fulltime while continuing to grow as a developer on the side.",
+    title: "FBT Representative",
+    org: "Concentrix|Bytedance · Philippines",
+    desc: "FBT stands for Fulfilled by TikTok, a Bytedance account. My official title at the Workday level is Customer Service Advisor I. In this role, I act as a CSR (Customer Service Representative) while training the chatbot AI used for TikTok Shop.",
   },
 ];
 </script>

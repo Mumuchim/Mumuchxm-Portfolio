@@ -60,7 +60,7 @@
             <!-- Employment badge -->
             <div class="otwBadge">
               <span class="otwDot"></span>
-              <span class="otwLabel">Fulltime · Concentrix</span>
+              <span class="otwLabel">Fulltime · Concentrix|Bytedance</span>
             </div>
             <h1 class="heroTitle" ref="titleRef" :style="titleStyle">JEROME ISAAC CERENEO</h1>
             <p class="heroLocation">based in Philippines.</p>
