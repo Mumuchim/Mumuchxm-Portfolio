@@ -60,12 +60,12 @@
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { playCardDeal, playCardHover } from "../composables/useSfx.js";
 
-// Drop your logo files into src/assets/ using these exact filenames
+// Drop your logo files into src/assets/logos/ using these exact filenames
 // (see chat for recommended sizes). Missing files will break the build —
 // keep the placeholders until you're ready to swap them.
-import dyciLogo    from "../assets/dyci-logo.png";
-import primcareLogo from "../assets/primcare-logo.png";
-import tiktokLogo   from "../assets/tiktok-logo.png";
+import dycLogo        from "../assets/dyci-logo.png";
+import primcareLogo   from "../assets/primcare-logo.png";
+import concentrixLogo from "../assets/concentrix-logo.png";
 
 defineProps({
   id: { type: String, default: "experience" },
@@ -154,7 +154,7 @@ const events = [
     type: "education",
     label: "Education",
     icon: "🎓",
-    logo: dyciLogo,
+    logo: dycLogo,
     date: "2021 — 2025",
     title: "BS Computer Science",
     org: "Dr. Yanga's Colleges, Inc.",
@@ -169,14 +169,14 @@ const events = [
     date: "Jul 2025 — Nov 2025 · 5 mos",
     title: "Marketing Associate",
     org: "Primcare Marketing Corporation · Plaridel, Central Luzon · On-site",
-    desc: "Absorbed from internship into a full-time role as Sequence Builder and is responsible for creating, managing, and optimizing automated message sequences on Botcakes and Pancake platforms. Designed conditional logic workflows for personalized user engagement and monitored performance metrics to improve automation efficiency. Left in November to fully commit to software development.",
+    desc: "Absorbed from internship into a full-time role as Sequence Builder and is responsible for creating, managing, and optimizing automated message sequences on Botcakes and Pancake platforms. Designed conditional logic workflows for personalized user engagement and monitored performance metrics to improve automation efficiency. Left in November to fully commit to software development but still didn't get a proper career in programming..",
     tags: ["Sequence Builder", "Marketing Automation", "Botcakes", "Pancake", "Canva", "LLMs"],
   },
   {
     type: "now",
     label: "Now",
     icon: "🟢",
-    logo: tiktokLogo,
+    logo: concentrixLogo,
     date: "Apr 2026 — Present",
     title: "FBT Representative",
     org: "Concentrix | Bytedance · Philippines",
@@ -255,25 +255,21 @@ const events = [
 }
 
 .timelineDot.education {
-  border-color: rgba(255,255,255,.35);
-  background: #0a0a0f;
+  border-color: rgba(37,99,235,.35);
   box-shadow:
-    0 0 0 2px rgba(28,58,158,.65),
-    0 0 0 4px rgba(250,204,21,.50),
-    0 0 16px rgba(255,255,255,.12),
-    0 8px 24px rgba(0,0,0,.4);
-  color: #ffffff;
+    0 0 0 4px rgba(37,99,235,.10),
+    0 0 16px rgba(37,99,235,.18),
+    0 8px 24px rgba(0,0,0,.35);
+  color: #5b8def;
 }
 
 .timelineDot.work {
-  border-color: rgba(255,255,255,.35);
-  background: #0a0a0f;
+  border-color: rgba(74,222,128,.35);
   box-shadow:
-    0 0 0 2px rgba(34,197,94,.65),
-    0 0 0 4px rgba(212,175,55,.50),
-    0 0 16px rgba(255,255,255,.12),
-    0 8px 24px rgba(0,0,0,.4);
-  color: #ffffff;
+    0 0 0 4px rgba(250,204,21,.10),
+    0 0 16px rgba(74,222,128,.18),
+    0 8px 24px rgba(0,0,0,.35);
+  color: #d9f99d;
 }
 
 .timelineDot.now {
@@ -365,38 +361,14 @@ const events = [
     0 12px 36px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
 }
 
-.timelineItem.education .timelineCard {
-  border-color: rgba(255,255,255,.10);
-  background: linear-gradient(135deg, rgba(0,0,0,.75), rgba(10,10,14,.75));
-  box-shadow:
-    -2px 0 0 0 rgba(28,58,158,.45),
-    2px 0 0 0 rgba(250,204,21,.35),
-    0 12px 36px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
-}
-
-.timelineItem.work .timelineCard {
-  border-color: rgba(255,255,255,.10);
-  background: linear-gradient(135deg, rgba(0,0,0,.75), rgba(10,10,14,.75));
-  box-shadow:
-    -2px 0 0 0 rgba(34,197,94,.40),
-    2px 0 0 0 rgba(212,175,55,.40),
-    0 12px 36px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
-}
-
 .timelineItem.education .timelineCard:hover {
-  border-color: rgba(255,255,255,.16);
-  box-shadow:
-    -3px 0 0 0 rgba(28,58,158,.65),
-    3px 0 0 0 rgba(250,204,21,.55),
-    0 18px 48px rgba(0,0,0,.45);
+  border-color: rgba(37,99,235,.30);
+  box-shadow: 0 18px 48px rgba(0,0,0,.36), 0 0 20px rgba(37,99,235,.16);
 }
 
 .timelineItem.work .timelineCard:hover {
-  border-color: rgba(255,255,255,.16);
-  box-shadow:
-    -3px 0 0 0 rgba(34,197,94,.60),
-    3px 0 0 0 rgba(212,175,55,.60),
-    0 18px 48px rgba(0,0,0,.45);
+  border-color: rgba(74,222,128,.30);
+  box-shadow: 0 18px 48px rgba(0,0,0,.36), 0 0 18px rgba(250,204,21,.16), 0 0 14px rgba(74,222,128,.12);
 }
 
 .timelineItem.now .timelineCard:hover {
@@ -435,20 +407,21 @@ const events = [
 }
 
 .timelineTypeBadge.education {
-  background: #000000;
-  border: 1px solid rgba(28,58,158,.65);
-  color: #ffffff;
+  background: rgba(37,99,235,.14);
+  border: 1px solid rgba(58, 95, 232, 0.35);
+  color: #7fa8ff;
 }
 
 .timelineTypeBadge.work {
-  background: #000000;
-  border: 1px solid rgba(34,197,94,.65);
-  color: #ffffff;
+  background: rgba(250,204,21,.10);
+  border: 1px solid rgba(74,222,128,.35);
+  color: #eab308;
 }
 
 .timelineTypeBadge.now {
   background: #000000;
   border: 1px solid rgba(37,244,238,.55);
+  box-shadow: inset 0 0 0 1px rgba(254,44,85,.35);
   color: #ffffff;
 }
 
@@ -462,11 +435,11 @@ const events = [
 }
 
 .timelineItem.education .timelineTitle {
-  color: #ffffff;
+  color: #7fa8ff;
 }
 
 .timelineItem.work .timelineTitle {
-  color: #ffffff;
+  color: #fde047;
 }
 
 .timelineItem.now .timelineTitle {
