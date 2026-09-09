@@ -22,6 +22,7 @@
       <span v-if="status === 'finished'" class="statusBadge finished">✔ Finished</span>
       <span v-else-if="status === 'in-progress'" class="statusBadge inprogress">⚙ In Progress</span>
       <span v-else-if="status === 'pending'" class="statusBadge pending">⏳ Pending Project</span>
+      <span v-else-if="status === 'discontinued'" class="statusBadge discontinued">✕ Discontinued</span>
     <!-- Local Only overlay -->
       <div v-if="localOnly" class="localOnlyOverlay">
         <span class="localOnlyIcon">💾</span>
@@ -106,6 +107,7 @@
             <span v-if="status === 'finished'" class="statusBadge finished" style="position:static;backdrop-filter:none">✔ Finished</span>
             <span v-else-if="status === 'in-progress'" class="statusBadge inprogress" style="position:static;backdrop-filter:none">⚙ In Progress</span>
             <span v-else-if="status === 'pending'" class="statusBadge pending" style="position:static;backdrop-filter:none">⏳ Pending Project</span>
+            <span v-else-if="status === 'discontinued'" class="statusBadge discontinued" style="position:static;backdrop-filter:none">✕ Discontinued</span>
           </div>
           <h2 class="detailTitle">{{ title }}</h2>
         </div>
@@ -454,6 +456,13 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
   background: rgba(20, 40, 80, 0.72);
   border: 1px solid rgba(100, 160, 255, 0.50);
   color: #93c5fd;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+.statusBadge.discontinued {
+  background: rgba(80, 20, 20, 0.72);
+  border: 1px solid rgba(255, 80, 80, 0.50);
+  color: #ff8a8a;
   box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 

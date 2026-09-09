@@ -115,7 +115,7 @@ const projects = computed(() => [
     desc:   "A Board game like chess using Pentominos to battle until your opponent can't place a piece anymore... It's actually fun to play but not to code :< ",
     img:    null,
     link:   "https://pento-battle.vercel.app/",
-    status: "in-progress",
+    status: "discontinued",
     tags:   ["vue", "vite", "canva", "figma", "supabase", "vercel"],
     details: {
       problem: 'Inspired by my high school math teacher who ran Pentomino games in school, there was no digital version of this yet so maybe this is the first, so I decided to build a simple one but turns out to be more ambitious.',
@@ -191,7 +191,7 @@ const projects = computed(() => [
     img:    bunnychimGif,
     link:   null,
     video:  null,
-    status: "pending",
+    status: "in-progress",
     tags:   ["unity"],
     details: {
       concept: true,
