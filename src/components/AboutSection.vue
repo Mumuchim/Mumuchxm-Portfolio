@@ -251,7 +251,7 @@ const overviewModel = [
   { type: "bold", value: "Marketing Associate" },
   { type: "text", value: " role, building automated message sequences and workflows. I left in late 2025 to fully commit to " },
   { type: "bold", value: "software development" },
-  { type: "text", value: "." },
+  { type: "text", value: " but still didn't land into programming career." },
   { type: "br" },
   { type: "br" },
   { type: "text", value: "Currently, I work at " },
