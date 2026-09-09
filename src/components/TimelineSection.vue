@@ -15,20 +15,23 @@
           <!-- Line + dot -->
           <div class="timelineStem">
             <div class="timelineDot" :class="item.type">
-              <!-- Education: graduation cap -->
-              <svg v-if="item.type === 'education'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                <path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/>
-              </svg>
-              <!-- Work: briefcase -->
-              <svg v-else-if="item.type === 'work'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="7" width="20" height="14" rx="2"/>
-                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-                <line x1="12" y1="12" x2="12" y2="12"/>
-                <path d="M2 12h20"/>
-              </svg>
-              <!-- Now: pulse dot -->
-              <span v-else class="nowDot"></span>
+              <img v-if="item.logo" :src="item.logo" :alt="`${item.org} logo`" class="timelineLogoImg" />
+              <template v-else>
+                <!-- Education: graduation cap -->
+                <svg v-if="item.type === 'education'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/>
+                </svg>
+                <!-- Work: briefcase -->
+                <svg v-else-if="item.type === 'work'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2"/>
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                  <line x1="12" y1="12" x2="12" y2="12"/>
+                  <path d="M2 12h20"/>
+                </svg>
+                <!-- Now: pulse dot -->
+                <span v-else class="nowDot"></span>
+              </template>
             </div>
             <div v-if="i < events.length - 1" class="timelineLine"></div>
           </div>
@@ -56,6 +59,13 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { playCardDeal, playCardHover } from "../composables/useSfx.js";
+
+// Drop your logo files into src/assets/logos/ using these exact filenames
+// (see chat for recommended sizes). Missing files will break the build —
+// keep the placeholders until you're ready to swap them.
+import dycLogo        from "../assets/logos/dyc-logo.png";
+import primcareLogo   from "../assets/logos/primcare-logo.png";
+import concentrixLogo from "../assets/logos/concentrix-logo.png";
 
 defineProps({
   id: { type: String, default: "experience" },
@@ -144,6 +154,7 @@ const events = [
     type: "education",
     label: "Education",
     icon: "🎓",
+    logo: dycLogo,
     date: "2021 — 2025",
     title: "BS Computer Science",
     org: "Dr. Yanga's Colleges, Inc.",
@@ -154,6 +165,7 @@ const events = [
     type: "work",
     label: "Full-time",
     icon: "💼",
+    logo: primcareLogo,
     date: "Jul 2025 — Nov 2025 · 5 mos",
     title: "Marketing Associate",
     org: "Primcare Marketing Corporation · Plaridel, Central Luzon · On-site",
@@ -164,6 +176,7 @@ const events = [
     type: "now",
     label: "Now",
     icon: "🟢",
+    logo: concentrixLogo,
     date: "Apr 2026 — Present",
     title: "FBT Representative",
     org: "Concentrix | Bytedance · Philippines",
@@ -268,6 +281,14 @@ const events = [
     0 0 16px rgba(255,255,255,.15),
     0 8px 24px rgba(0,0,0,.4);
   color: #ffffff;
+}
+
+.timelineLogoImg {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
 }
 
 .nowDot {
@@ -402,7 +423,6 @@ const events = [
   border: 1px solid rgba(37,244,238,.55);
   box-shadow: inset 0 0 0 1px rgba(254,44,85,.35);
   color: #ffffff;
-  text-shadow: -1.5px 0 rgba(254,44,85,.95), 1.5px 0 rgba(37,244,238,.95);
 }
 
 .timelineTitle {
@@ -424,7 +444,6 @@ const events = [
 
 .timelineItem.now .timelineTitle {
   color: #ffffff;
-  text-shadow: -1.5px 0 rgba(254,44,85,.75), 1.5px 0 rgba(37,244,238,.75);
 }
 
 .timelineOrg {
