@@ -169,7 +169,7 @@ const events = [
     date: "Jul 2025 — Nov 2025 · 5 mos",
     title: "Marketing Associate",
     org: "Primcare Marketing Corporation · Plaridel, Central Luzon · On-site",
-    desc: "Absorbed from internship into a full-time role as Sequence Builder and is responsible for creating, managing, and optimizing automated message sequences on Botcakes and Pancake platforms. Designed conditional logic workflows for personalized user engagement and monitored performance metrics to improve automation efficiency. Left in November to fully commit to software development but still didn't get a proper career in programming..",
+    desc: "Absorbed from internship into a full-time role as Sequence Builder and is responsible for creating, managing, and optimizing automated message sequences on Botcakes and Pancake platforms. Designed conditional logic workflows for personalized user engagement and monitored performance metrics to improve automation efficiency. Left in November to fully commit to software development but still didn't land into programming career.",
     tags: ["Sequence Builder", "Marketing Automation", "Botcakes", "Pancake", "Canva", "LLMs"],
   },
   {
