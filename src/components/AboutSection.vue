@@ -251,10 +251,23 @@ const overviewModel = [
   { type: "bold", value: "Marketing Associate" },
   { type: "text", value: " role, building automated message sequences and workflows. I left in late 2025 to fully commit to " },
   { type: "bold", value: "software development" },
+  { type: "text", value: "." },
+  { type: "br" },
+  { type: "br" },
+  { type: "text", value: "Currently, I work at " },
+  { type: "bold", value: "Concentrix" },
+  { type: "text", value: " on the " },
+  { type: "bold", value: "Bytedance (TikTok)" },
+  { type: "text", value: " account as a " },
+  { type: "bold", value: "Customer Service Advisor I" },
+  { type: "text", value: " — internally known as an " },
+  { type: "bold", value: "FBT (Fulfilled by TikTok) Representative" },
+  { type: "text", value: " — where I act as a CSR supporting TikTok Shop's chatbot AI training. It's not a programming role, but I'm still learning programming little by little on the side, picking up new skills whenever I can." },
+  { type: "br" },
+  { type: "br" },
   {
     type: "text",
-    value:
-      " and now eager to improve my programming skills and pick up any stack, and contribute meaningfully to real projects.",
+    value: "I'm eager to keep growing and eventually contribute meaningfully to real projects.",
   },
 ];
 
