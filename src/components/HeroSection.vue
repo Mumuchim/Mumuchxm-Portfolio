@@ -166,7 +166,7 @@
           <template v-if="resumeStage === 'notice'">
             <div class="contactHeader">
               <h3 class="contactTitle">HEADS UP</h3>
-              <p class="contactSub">I'm currently hired full-time. Still want to download my resume?</p>
+              <p class="contactSub resumeGateNotice">I'm currently hired full-time. Still want to download my resume?</p>
             </div>
             <div class="contactActions resumeGateActions">
               <button class="contactBtn okWide" @click="closeResumeGate">CANCEL</button>
@@ -679,6 +679,14 @@ onBeforeUnmount(() => { window.removeEventListener("keydown", onKeydown); window
 /* ===== RESUME GATE ===== */
 .resumeGateCard {
   width: min(420px, 92vw);
+}
+
+.resumeGateNotice {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255,255,255,.84);
+  margin-top: 4px;
 }
 
 .resumeGateActions {
