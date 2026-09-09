@@ -178,7 +178,7 @@
           <template v-else-if="resumeStage === 'password'">
             <div class="contactHeader">
               <h3 class="contactTitle">ENTER CODE</h3>
-              <p class="contactSub">This resume is passcode-protected.</p>
+              <p class="contactSub resumeGateNotice">This resume is passcode-protected.</p>
             </div>
             <input
               ref="resumeCodeInput"
