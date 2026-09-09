@@ -255,21 +255,25 @@ const events = [
 }
 
 .timelineDot.education {
-  border-color: rgba(37,99,235,.35);
+  border-color: rgba(255,255,255,.35);
+  background: #0a0a0f;
   box-shadow:
-    0 0 0 4px rgba(37,99,235,.10),
-    0 0 16px rgba(37,99,235,.18),
-    0 8px 24px rgba(0,0,0,.35);
-  color: #5b8def;
+    0 0 0 2px rgba(28,58,158,.65),
+    0 0 0 4px rgba(250,204,21,.50),
+    0 0 16px rgba(255,255,255,.12),
+    0 8px 24px rgba(0,0,0,.4);
+  color: #ffffff;
 }
 
 .timelineDot.work {
-  border-color: rgba(74,222,128,.35);
+  border-color: rgba(255,255,255,.35);
+  background: #0a0a0f;
   box-shadow:
-    0 0 0 4px rgba(250,204,21,.10),
-    0 0 16px rgba(74,222,128,.18),
-    0 8px 24px rgba(0,0,0,.35);
-  color: #d9f99d;
+    0 0 0 2px rgba(34,197,94,.65),
+    0 0 0 4px rgba(212,175,55,.50),
+    0 0 16px rgba(255,255,255,.12),
+    0 8px 24px rgba(0,0,0,.4);
+  color: #ffffff;
 }
 
 .timelineDot.now {
@@ -361,14 +365,38 @@ const events = [
     0 12px 36px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
 }
 
+.timelineItem.education .timelineCard {
+  border-color: rgba(255,255,255,.10);
+  background: linear-gradient(135deg, rgba(0,0,0,.75), rgba(10,10,14,.75));
+  box-shadow:
+    -2px 0 0 0 rgba(28,58,158,.45),
+    2px 0 0 0 rgba(250,204,21,.35),
+    0 12px 36px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.timelineItem.work .timelineCard {
+  border-color: rgba(255,255,255,.10);
+  background: linear-gradient(135deg, rgba(0,0,0,.75), rgba(10,10,14,.75));
+  box-shadow:
+    -2px 0 0 0 rgba(34,197,94,.40),
+    2px 0 0 0 rgba(212,175,55,.40),
+    0 12px 36px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
 .timelineItem.education .timelineCard:hover {
-  border-color: rgba(37,99,235,.30);
-  box-shadow: 0 18px 48px rgba(0,0,0,.36), 0 0 20px rgba(37,99,235,.16);
+  border-color: rgba(255,255,255,.16);
+  box-shadow:
+    -3px 0 0 0 rgba(28,58,158,.65),
+    3px 0 0 0 rgba(250,204,21,.55),
+    0 18px 48px rgba(0,0,0,.45);
 }
 
 .timelineItem.work .timelineCard:hover {
-  border-color: rgba(74,222,128,.30);
-  box-shadow: 0 18px 48px rgba(0,0,0,.36), 0 0 18px rgba(250,204,21,.16), 0 0 14px rgba(74,222,128,.12);
+  border-color: rgba(255,255,255,.16);
+  box-shadow:
+    -3px 0 0 0 rgba(34,197,94,.60),
+    3px 0 0 0 rgba(212,175,55,.60),
+    0 18px 48px rgba(0,0,0,.45);
 }
 
 .timelineItem.now .timelineCard:hover {
@@ -407,15 +435,15 @@ const events = [
 }
 
 .timelineTypeBadge.education {
-  background: rgba(37,99,235,.14);
-  border: 1px solid rgba(37,99,235,.35);
-  color: #7fa8ff;
+  background: #000000;
+  border: 1px solid rgba(28,58,158,.65);
+  color: #ffffff;
 }
 
 .timelineTypeBadge.work {
-  background: rgba(250,204,21,.10);
-  border: 1px solid rgba(74,222,128,.35);
-  color: #eab308;
+  background: #000000;
+  border: 1px solid rgba(34,197,94,.65);
+  color: #ffffff;
 }
 
 .timelineTypeBadge.now {
@@ -434,11 +462,11 @@ const events = [
 }
 
 .timelineItem.education .timelineTitle {
-  color: #7fa8ff;
+  color: #ffffff;
 }
 
 .timelineItem.work .timelineTitle {
-  color: #fde047;
+  color: #ffffff;
 }
 
 .timelineItem.now .timelineTitle {
