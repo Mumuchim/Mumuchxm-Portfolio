@@ -60,12 +60,25 @@
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import { playCardDeal, playCardHover } from "../composables/useSfx.js";
 
-// Drop your logo files into src/assets/logos/ using these exact filenames
-// (see chat for recommended sizes). Missing files will break the build —
-// keep the placeholders until you're ready to swap them.
-import dycLogo        from "../assets/dyci-logo.png";
-import primcareLogo   from "../assets/primcare-logo.png";
-import concentrixLogo from "../assets/concentrix-logo.png";
+// Company logos are looked up from src/assets/ (or src/assets/logos/) instead of
+// hard-imported, so a missing or differently-named file no longer breaks the build —
+// that entry just renders without a logo. Matching ignores upper/lower case.
+const logoFiles = import.meta.glob(
+  [
+    "../assets/*logo*.{png,jpg,jpeg,webp,svg}",
+    "../assets/logos/*.{png,jpg,jpeg,webp,svg}",
+  ],
+  { eager: true, query: "?url", import: "default" }
+);
+
+function findLogo(name) {
+  const key = Object.keys(logoFiles).find((k) => k.toLowerCase().includes(name));
+  return key ? logoFiles[key] : null;
+}
+
+const dycLogo        = findLogo("dyci-logo");
+const primcareLogo   = findLogo("primcare-logo");
+const concentrixLogo = findLogo("concentrix-logo");
 
 defineProps({
   id: { type: String, default: "experience" },
