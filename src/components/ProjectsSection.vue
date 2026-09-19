@@ -188,14 +188,23 @@ const projects = computed(() => [
   },
   {
     title:  "Sudden Death",
-    desc:   "A dark story game with multiple endings to find. Contains heavy themes: stalking, obsession, suicide, and violence between teenagers.",
+    desc:   "A dark story game in two halves: a school, and a kingdom under it three hundred years later. Fights are read, not rolled, and there are 15 endings. Heavy themes (stalking, suicide, teen violence), so check the content warning first.",
     img:    suddenDeathImg,
     link:   "https://sudden-death-game.vercel.app/",
     video:  null,
-    status: "finished",
-    tags:   ["vercel"],
+    status: "in-progress",
+    tags:   ["vue", "vite", "vercel"],
+    details: {
+      problem: "I wanted a story game where the choices actually matter and the game never tells you which ones did. Most story games either hide their consequences or turn every fight into dice rolls, so I set out to make one where people are the mechanic and combat is about reading the enemy instead of luck. It carries a content warning: stalking, obsession, suicide, and violence between teenagers.",
+      built: "A browser story game in two halves: a school, and a kingdom under it three hundred years later, with 15 endings to find. Built with Vue 3 + Vite and deployed on Vercel. The game itself (scenes, typewriter text, combat, timer, and saves) is plain JavaScript in its own folder, so it isn't tied to Vue and I could also ship a no-build static version from the same code. Fights are timed at two to four seconds. Every enemy shows its tell in words and in the shape of its mask, and the same tell always has one right answer (Strike, Parry left/front/right, Jump, or Heal). After the first few exchanges the order shuffles, so you can't memorize a fight. There are no image or audio files: the music is generated live with the Web Audio API, the drifting particles are a canvas, and the masks and portraits are inline SVG. It's still in progress, and I keep tuning the story and combat.",
+      learned: "Balance is mostly about what a mistake costs. I added cooldowns, then removed them because they punished good reads, and moved the difficulty into the clock and a stagger status instead. I learned to keep the game engine separate from the UI so I could test it headless in Node, and to write small audit scripts that check every choice leads somewhere and every ending resolves, because a branching story breaks in places you'd never click. I also learned Web Audio and canvas well enough to skip asset files entirely, and how to use a seeded shuffle so a save replays the same fight.",
+    },
     stack: [
-      { name: "Vercel", icon: vercelIcon },
+      { name: "Vue",        icon: vueIcon  },
+      { name: "Vite",       icon: viteIcon },
+      { name: "JavaScript", icon: jsIcon   },
+      { name: "CSS",        icon: cssIcon  },
+      { name: "Vercel",     icon: vercelIcon },
     ],
   },
   {
