@@ -72,6 +72,7 @@ import webglIcon     from "../assets/stack/webgl.png";
 import itchIcon      from "../assets/stack/itch.png";
 import bunnychimGif  from "../assets/bunnychim.gif";
 import dycaiThumb   from "../assets/dyc-ai-thumbnail.png";
+import suddenDeathImg from "../assets/sudden-death.png";
 import groqIcon     from "../assets/stack/groq.png";
 
 // ── Filter options ──────────────────────────────────────────
@@ -183,6 +184,18 @@ const projects = computed(() => [
       { name: "Python", icon: pythonIcon },
       { name: "Flask",  icon: flaskIcon },
       { name: "XAMPP",  icon: sqlIcon },
+    ],
+  },
+  {
+    title:  "Sudden Death",
+    desc:   "A dark story game with multiple endings to find. Contains heavy themes: stalking, obsession, suicide, and violence between teenagers.",
+    img:    suddenDeathImg,
+    link:   "https://sudden-death-game.vercel.app/",
+    video:  null,
+    status: "finished",
+    tags:   ["vercel"],
+    stack: [
+      { name: "Vercel", icon: vercelIcon },
     ],
   },
   {
